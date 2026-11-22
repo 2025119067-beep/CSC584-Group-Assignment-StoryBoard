@@ -1,0 +1,759 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Calendar | Siswa-Gigs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f3fa;
+    color: #30264a;
+}
+
+header {
+    background: #39216d;
+    color: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #f5cd55;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 14px;
+}
+
+.container {
+    width: 86%;
+    max-width: 1250px;
+    margin: 35px auto;
+}
+
+.page-heading {
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-heading p {
+    color: #777;
+    font-size: 14px;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+    padding: 22px;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px #00000008;
+}
+
+.summary-card p {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.summary-card h2 {
+    color: #5936a8;
+    font-size: 25px;
+}
+
+.section {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 12px #00000008;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 19px;
+}
+
+.legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #666;
+}
+
+.legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.work-dot { background: #5936a8; }
+.personal-dot { background: #e5ad35; }
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.calendar-header h3 {
+    font-size: 19px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+
+.day-name {
+    background: #f5f1fc;
+    padding: 12px 5px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #5936a8;
+}
+
+.calendar-day {
+    min-height: 105px;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 9px 6px;
+    font-size: 13px;
+}
+
+.calendar-day.empty {
+    background: #fafafa;
+}
+
+.date-number {
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.today {
+    background: #f5f0ff;
+}
+
+.event-tag {
+    display: block;
+    font-size: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.work-tag {
+    background: #eee6ff;
+    color: #5936a8;
+}
+
+.personal-tag {
+    background: #fff3d3;
+    color: #956b13;
+}
+
+.shift-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.shift-card {
+    border: 1px solid #e9e3f4;
+    border-left: 4px solid #5936a8;
+    padding: 17px;
+    border-radius: 9px;
+}
+
+.shift-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.shift-card p {
+    font-size: 13px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.confirmed {
+    display: inline-block;
+    background: #e6f5e9;
+    color: #278342;
+    font-size: 11px;
+    padding: 5px 9px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.personal-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+input, select {
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    outline: none;
+    font-size: 13px;
+}
+
+input:focus, select:focus {
+    border-color: #7147c7;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.primary-btn {
+    background: #5936a8;
+    color: white;
+    padding: 12px 20px;
+    margin-top: 17px;
+}
+
+.primary-btn:hover {
+    background: #39216d;
+}
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.personal-item {
+    background: #fffbf0;
+    border: 1px solid #f3e5bc;
+    padding: 15px;
+    border-radius: 9px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.personal-item h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.personal-item p {
+    color: #777;
+    font-size: 12px;
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 8px 11px;
+    font-size: 11px;
+}
+
+.edit-btn {
+    background: #eee6ff;
+    color: #5936a8;
+}
+
+.delete-btn {
+    background: #ffe9e9;
+    color: #c43d3d;
+}
+
+.note {
+    background: #f5f1fc;
+    padding: 13px;
+    border-radius: 8px;
+    color: #65528a;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.empty-message {
+    color: #888;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    padding: 22px;
+    color: #888;
+    font-size: 12px;
+}
+
+@media(max-width: 750px) {
+    .container { width: 94%; }
+    .summary { grid-template-columns: 1fr; }
+    .shift-list { grid-template-columns: 1fr; }
+    .calendar-day { min-height: 75px; }
+    .event-tag { font-size: 8px; }
+    nav { display: none; }
+    .personal-form { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: auto; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Siswa<span>-Gigs</span></div>
+    <nav>
+        <a href="student-dashboard.html">Dashboard</a>
+        <a href="browse-jobs.html">Browse Jobs</a>
+        <a href="my-applications.html">Applications</a>
+        <a href="my-calendar.html">My Calendar</a>
+        <a href="student-profile.html">Profile</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="page-heading">
+        <h1>My Calendar</h1>
+        <p>Keep track of your confirmed work shifts and personal activities.</p>
+    </div>
+
+    <div class="summary">
+        <div class="summary-card">
+            <p>Confirmed Work Shifts</p>
+            <h2 id="shiftCount">2</h2>
+        </div>
+
+        <div class="summary-card">
+            <p>Scheduled Working Hours</p>
+            <h2>13 Hours</h2>
+        </div>
+
+        <div class="summary-card">
+            <p>Personal Events</p>
+            <h2 id="personalCount">2</h2>
+        </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="section">
+
+        <div class="section-heading">
+            <h2>November 2026</h2>
+
+            <div class="legend">
+                <span><i class="dot work-dot"></i> Work Shift</span>
+                <span><i class="dot personal-dot"></i> Personal Event</span>
+            </div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+    </div>
+
+    <!-- CONFIRMED WORK SHIFTS -->
+    <div class="section">
+
+        <div class="section-heading">
+            <h2>Confirmed Work Shifts</h2>
+        </div>
+
+        <div class="shift-list">
+
+            <div class="shift-card">
+                <h3>F&B Service Crew</h3>
+                <p>Campus F&B Vendor</p>
+                <p>Wednesday, 4 November 2026</p>
+                <p>10:00 AM – 2:00 PM</p>
+                <p>4 hours | RM10/hour</p>
+                <span class="confirmed">Confirmed</span>
+            </div>
+
+            <div class="shift-card">
+                <h3>University Event Crew</h3>
+                <p>University Event Department</p>
+                <p>Wednesday, 11 November 2026</p>
+                <p>8:00 AM – 5:00 PM</p>
+                <p>9 hours | RM15/hour</p>
+                <span class="confirmed">Confirmed</span>
+            </div>
+
+        </div>
+
+        <div class="note">
+            Work shifts are displayed automatically after confirmation.
+            Students cannot directly edit or delete confirmed work shifts.
+            Contact the employer if a schedule change is needed.
+        </div>
+
+    </div>
+
+    <!-- PERSONAL EVENT FORM -->
+    <div class="section">
+
+        <div class="section-heading">
+            <h2 id="formHeading">Add Personal Event</h2>
+        </div>
+
+        <form id="eventForm">
+
+            <div class="personal-form">
+
+                <div class="form-group full">
+                    <label>Event Title</label>
+                    <input type="text" id="eventTitle"
+                           placeholder="e.g. Assignment Deadline" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Event Date</label>
+                    <input type="date" id="eventDate"
+                           min="2026-11-01" max="2026-11-30" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Event Time</label>
+                    <input type="time" id="eventTime" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Event Category</label>
+                    <select id="eventCategory">
+                        <option value="Personal">Personal</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Appointment">Appointment</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit" class="primary-btn" id="submitBtn">
+                + Add Event
+            </button>
+
+            <button type="button" class="edit-btn"
+                    id="cancelEdit" style="display:none;"
+                    onclick="resetForm()">
+                Cancel
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- PERSONAL EVENT LIST -->
+    <div class="section">
+
+        <div class="section-heading">
+            <h2>My Personal Events</h2>
+        </div>
+
+        <div class="event-list" id="personalEventList"></div>
+
+        <div class="note">
+            You can add, edit or delete your own personal events.
+            These events are separate from your confirmed work shifts.
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Siswa-Gigs | Campus Part-Time Job Portal
+</footer>
+
+<script>
+const workShifts = [
+    {
+        date: "2026-11-04",
+        title: "F&B Service Crew",
+        time: "10 AM - 2 PM"
+    },
+    {
+        date: "2026-11-11",
+        title: "University Event Crew",
+        time: "8 AM - 5 PM"
+    }
+];
+
+const defaultEvents = [
+    {
+        id: 1,
+        title: "Assignment Deadline",
+        date: "2026-11-06",
+        time: "11:59",
+        category: "Academic"
+    },
+    {
+        id: 2,
+        title: "Personal Appointment",
+        date: "2026-11-09",
+        time: "2:00",
+        category: "Appointment"
+    }
+];
+
+let personalEvents = JSON.parse(
+    localStorage.getItem("siswaGigsPersonalEvents")
+) || defaultEvents;
+
+let editingId = null;
+
+function saveEvents() {
+    localStorage.setItem(
+        "siswaGigsPersonalEvents",
+        JSON.stringify(personalEvents)
+    );
+}
+
+function renderCalendar() {
+    const grid = document.getElementById("calendarGrid");
+    grid.innerHTML = "";
+
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    days.forEach(day => {
+        const heading = document.createElement("div");
+        heading.className = "day-name";
+        heading.textContent = day;
+        grid.appendChild(heading);
+    });
+
+    const firstDay = new Date(2026, 10, 1).getDay();
+    const totalDays = 30;
+
+    for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "calendar-day empty";
+        grid.appendChild(empty);
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+        const date = "2026-11-" + String(day).padStart(2, "0");
+
+        const cell = document.createElement("div");
+        cell.className = "calendar-day";
+
+        const number = document.createElement("div");
+        number.className = "date-number";
+        number.textContent = day;
+        cell.appendChild(number);
+
+        workShifts.filter(event => event.date === date)
+            .forEach(event => {
+                const tag = document.createElement("span");
+                tag.className = "event-tag work-tag";
+                tag.textContent = event.title;
+                cell.appendChild(tag);
+            });
+
+        personalEvents.filter(event => event.date === date)
+            .forEach(event => {
+                const tag = document.createElement("span");
+                tag.className = "event-tag personal-tag";
+                tag.textContent = event.title;
+                cell.appendChild(tag);
+            });
+
+        grid.appendChild(cell);
+    }
+}
+
+function renderPersonalEvents() {
+    const list = document.getElementById("personalEventList");
+    list.innerHTML = "";
+
+    document.getElementById("personalCount").textContent =
+        personalEvents.length;
+
+    if (personalEvents.length === 0) {
+        list.innerHTML = '<p class="empty-message">No personal events yet.</p>';
+        return;
+    }
+
+    personalEvents.sort((a, b) =>
+        (a.date + a.time).localeCompare(b.date + b.time)
+    );
+
+    personalEvents.forEach(event => {
+        const item = document.createElement("div");
+        item.className = "personal-item";
+
+        const info = document.createElement("div");
+
+        const title = document.createElement("h3");
+        title.textContent = event.title;
+
+        const details = document.createElement("p");
+        details.textContent =
+            event.date + " | " + event.time + " | " + event.category;
+
+        info.appendChild(title);
+        info.appendChild(details);
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const editButton = document.createElement("button");
+        editButton.className = "edit-btn";
+        editButton.textContent = "Edit";
+        editButton.onclick = () => editEvent(event.id);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = () => deleteEvent(event.id);
+
+        actions.appendChild(editButton);
+        actions.appendChild(deleteButton);
+
+        item.appendChild(info);
+        item.appendChild(actions);
+
+        list.appendChild(item);
+    });
+}
+
+document.getElementById("eventForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const eventData = {
+        title: document.getElementById("eventTitle").value.trim(),
+        date: document.getElementById("eventDate").value,
+        time: document.getElementById("eventTime").value,
+        category: document.getElementById("eventCategory").value
+    };
+
+    if (editingId !== null) {
+        personalEvents = personalEvents.map(event =>
+            event.id === editingId
+                ? { ...event, ...eventData }
+                : event
+        );
+    } else {
+        eventData.id = Date.now();
+        personalEvents.push(eventData);
+    }
+
+    saveEvents();
+    resetForm();
+    updatePage();
+});
+
+function editEvent(id) {
+    const event = personalEvents.find(item => item.id === id);
+
+    if (!event) return;
+
+    editingId = id;
+
+    document.getElementById("eventTitle").value = event.title;
+    document.getElementById("eventDate").value = event.date;
+    document.getElementById("eventTime").value = event.time;
+    document.getElementById("eventCategory").value = event.category;
+
+    document.getElementById("formHeading").textContent = "Edit Personal Event";
+    document.getElementById("submitBtn").textContent = "Save Changes";
+    document.getElementById("cancelEdit").style.display = "inline-block";
+
+    document.getElementById("eventForm").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+function deleteEvent(id) {
+    if (confirm("Are you sure you want to delete this personal event?")) {
+        personalEvents = personalEvents.filter(event => event.id !== id);
+        saveEvents();
+        updatePage();
+    }
+}
+
+function resetForm() {
+    document.getElementById("eventForm").reset();
+    editingId = null;
+
+    document.getElementById("formHeading").textContent = "Add Personal Event";
+    document.getElementById("submitBtn").textContent = "+ Add Event";
+    document.getElementById("cancelEdit").style.display = "none";
+}
+
+function updatePage() {
+    renderCalendar();
+    renderPersonalEvents();
+}
+
+updatePage();
+</script>
+
+</body>
+</html>

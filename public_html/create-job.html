@@ -1,0 +1,767 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Job | Siswa-Gigs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f7f3ff;
+    color: #30234a;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(110deg, #39216d, #6340a5);
+    color: white;
+    padding: 19px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 18px #39216d20;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: #f5cd55;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a {
+    color: #eee8ff;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #f5cd55;
+}
+
+/* CONTAINER */
+.container {
+    width: 86%;
+    max-width: 1000px;
+    margin: 35px auto 55px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: white;
+    color: #5936a8;
+    padding: 10px 16px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 23px;
+    box-shadow: 0 3px 12px #00000008;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #eee7ff;
+    transform: translateX(-3px);
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(120deg, #39216d, #7650bd);
+    border-radius: 17px;
+    padding: 30px 32px;
+    color: white;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border: 35px solid #ffffff12;
+    border-radius: 50%;
+    right: -35px;
+    top: -80px;
+}
+
+.hero-tag {
+    display: inline-block;
+    background: #ffffff20;
+    color: #f7df91;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 13px;
+}
+
+.hero h1 {
+    font-size: 29px;
+    margin-bottom: 9px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero p {
+    color: #e4dafa;
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 550px;
+    position: relative;
+    z-index: 1;
+}
+
+/* FORM */
+.form-card {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px #39216d0d;
+    border: 1px solid #eee9f7;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 24px;
+}
+
+.section-number {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    background: #eee7ff;
+    color: #5936a8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 11px;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.section-heading h2 {
+    color: #39216d;
+    font-size: 17px;
+    margin-bottom: 4px;
+}
+
+.section-heading p {
+    color: #999;
+    font-size: 12px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #44365f;
+}
+
+.required {
+    color: #e15d79;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #e4dfed;
+    border-radius: 9px;
+    font-size: 13px;
+    color: #392b54;
+    outline: none;
+    background: #fcfbfe;
+    transition: 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #8059c5;
+    background: white;
+    box-shadow: 0 0 0 3px #8059c51a;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #aaa3b5;
+}
+
+textarea {
+    min-height: 105px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.helper {
+    color: #999;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* DIVIDER */
+.divider {
+    border: none;
+    border-top: 1px solid #eeeaf4;
+    margin: 32px 0;
+}
+
+/* INFORMATION NOTE */
+.info-note {
+    background: #f6f1ff;
+    border-left: 4px solid #7952bd;
+    padding: 13px 16px;
+    border-radius: 7px;
+    margin-top: 25px;
+    color: #65518b;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* MESSAGE */
+.message {
+    display: none;
+    padding: 14px 17px;
+    margin-bottom: 23px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.message.success {
+    display: block;
+    background: #e9f8ee;
+    color: #247441;
+    border: 1px solid #c8ebd2;
+}
+
+.message.error {
+    display: block;
+    background: #fff0f0;
+    color: #b33333;
+    border: 1px solid #f4cece;
+}
+
+/* BUTTONS */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #eeeaf4;
+}
+
+button {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cancel-btn {
+    background: #f0edf5;
+    color: #685c7d;
+}
+
+.cancel-btn:hover {
+    background: #e5dfef;
+}
+
+.submit-btn {
+    background: linear-gradient(110deg, #5936a8, #7952bd);
+    color: white;
+    box-shadow: 0 4px 12px #5936a83b;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 17px #5936a84a;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #999;
+    font-size: 12px;
+    border-top: 1px solid #eeeaf4;
+}
+
+/* RESPONSIVE */
+@media(max-width: 700px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .form-card {
+        padding: 22px 18px;
+    }
+
+    .hero {
+        padding: 25px 22px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .button-group {
+        flex-direction: column-reverse;
+    }
+
+    .button-group button {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Siswa<span>-Gigs</span></div>
+
+    <nav>
+        <a href="employer-dashboard.html">Dashboard</a>
+        <a href="create-job.html" class="active">Create Job</a>
+        <a href="manage-jobs.html">Manage Jobs</a>
+        <a href="view-applicants.html">Applicants</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <a href="employer-dashboard.html" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+    <div class="hero">
+        <span class="hero-tag">EMPLOYER WORKSPACE</span>
+        <h1>Let's Create a New Job!</h1>
+        <p>
+            Share your job opportunity with talented university students.
+            Provide the details below to start receiving applications.
+        </p>
+    </div>
+
+    <div class="form-card">
+
+        <div id="message" class="message"></div>
+
+        <form id="jobForm">
+
+            <!-- SECTION 1: JOB INFORMATION -->
+
+            <div class="section-heading">
+                <div class="section-number">01</div>
+                <div>
+                    <h2>Job Information</h2>
+                    <p>Tell students about the job opportunity.</p>
+                </div>
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+                    <label>Job Title <span class="required">*</span></label>
+                    <input type="text" id="jobTitle"
+                        placeholder="e.g. F&B Service Crew" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Job Category <span class="required">*</span></label>
+                    <select id="jobCategory" required>
+                        <option value="">Select Category</option>
+                        <option>Food & Beverage</option>
+                        <option>Event & Promotion</option>
+                        <option>Administrative</option>
+                        <option>Retail</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Work Location <span class="required">*</span></label>
+                    <input type="text" id="workLocation"
+                        placeholder="e.g. Campus Cafeteria" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Job Description <span class="required">*</span></label>
+                    <textarea id="jobDescription"
+                        placeholder="Provide an overview of this job opportunity..."
+                        required></textarea>
+                    <span class="helper">
+                        Explain what the job is about and what students can expect.
+                    </span>
+                </div>
+
+                <div class="form-group full">
+                    <label>Key Responsibilities <span class="required">*</span></label>
+                    <textarea id="responsibilities"
+                        placeholder="e.g.&#10;Assist with event preparation and setup.&#10;Manage participant registration.&#10;Guide visitors during the event."
+                        required></textarea>
+                    <span class="helper">
+                        You can enter each responsibility on a separate line.
+                    </span>
+                </div>
+
+                <div class="form-group full">
+                    <label>Required Skills <span class="required">*</span></label>
+                    <textarea id="requiredSkills"
+                        placeholder="e.g.&#10;Good communication skills.&#10;Ability to work in a team.&#10;Responsible and punctual."
+                        required></textarea>
+                    <span class="helper">
+                        List the skills students should have.
+                    </span>
+                </div>
+
+                <div class="form-group full">
+                    <label>Job Requirements <span class="required">*</span></label>
+                    <textarea id="jobRequirements"
+                        placeholder="e.g.&#10;Must be a currently enrolled university student.&#10;Available on the scheduled working date.&#10;Willing to follow supervisor instructions."
+                        required></textarea>
+                    <span class="helper">
+                        Specify eligibility, availability and other job conditions.
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label>Number of Vacancies <span class="required">*</span></label>
+                    <input type="number" id="vacancies"
+                        min="1" step="1" placeholder="e.g. 3" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Hourly Rate (RM) <span class="required">*</span></label>
+                    <input type="number" id="hourlyRate"
+                        min="1" step="0.50" placeholder="e.g. 10.00" required>
+                </div>
+
+            </div>
+
+            <div class="info-note">
+                <strong>Payment information:</strong>
+                The hourly rate represents the gross payment offered to the student.
+                The platform fee is calculated separately during payment processing.
+            </div>
+
+            <hr class="divider">
+
+            <!-- SECTION 2: WORK SCHEDULE -->
+
+            <div class="section-heading">
+                <div class="section-number">02</div>
+                <div>
+                    <h2>Work Schedule</h2>
+                    <p>Set the working dates, time and application deadline.</p>
+                </div>
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Work Start Date <span class="required">*</span></label>
+                    <input type="date" id="startDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Work End Date</label>
+                    <input type="date" id="endDate">
+                    <span class="helper">
+                        Optional for one-day or flexible jobs.
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label>Start Time <span class="required">*</span></label>
+                    <input type="time" id="startTime" required>
+                </div>
+
+                <div class="form-group">
+                    <label>End Time <span class="required">*</span></label>
+                    <input type="time" id="endTime" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Application Closing Date <span class="required">*</span></label>
+                    <input type="date" id="closingDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Job Type <span class="required">*</span></label>
+                    <select id="jobType" required>
+                        <option value="">Select Job Type</option>
+                        <option>One-time Job</option>
+                        <option>Temporary</option>
+                        <option>Part-time</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="button-group">
+
+                <button type="reset" class="cancel-btn">
+                    Clear Form
+                </button>
+
+                <button type="submit" class="submit-btn">
+                    Publish Job →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Siswa-Gigs | Campus Part-Time Job Portal
+</footer>
+
+<script>
+
+const STORAGE_KEY = "siswaGigsJobs";
+
+const jobForm = document.getElementById("jobForm");
+const message = document.getElementById("message");
+
+// DISPLAY MESSAGE
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+// GET EXISTING JOB RECORDS
+function getSavedJobs() {
+
+    const savedData = localStorage.getItem(STORAGE_KEY);
+
+    if (!savedData) {
+        return [];
+    }
+
+    const jobs = JSON.parse(savedData);
+
+    if (Array.isArray(jobs)) {
+        return jobs;
+    }
+
+    if (jobs && typeof jobs === "object") {
+        return Object.values(jobs);
+    }
+
+    return [];
+}
+
+// SUBMIT FORM
+jobForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    if (!jobForm.checkValidity()) {
+        jobForm.reportValidity();
+        return;
+    }
+
+    // GET FORM VALUES
+    const title = document.getElementById("jobTitle").value.trim();
+    const category = document.getElementById("jobCategory").value;
+    const location = document.getElementById("workLocation").value.trim();
+
+    const description = document.getElementById("jobDescription").value.trim();
+    const responsibilities = document.getElementById("responsibilities").value.trim();
+    const requiredSkills = document.getElementById("requiredSkills").value.trim();
+    const jobRequirements = document.getElementById("jobRequirements").value.trim();
+
+    const vacancies = Number(document.getElementById("vacancies").value);
+    const hourlyRate = Number(document.getElementById("hourlyRate").value);
+
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    const startTime = document.getElementById("startTime").value;
+    const endTime = document.getElementById("endTime").value;
+
+    const closingDate = document.getElementById("closingDate").value;
+    const jobType = document.getElementById("jobType").value;
+
+    // VALIDATE VACANCIES
+    if (!Number.isInteger(vacancies) || vacancies < 1) {
+        showMessage("Please enter a valid number of vacancies.", "error");
+        return;
+    }
+
+    // VALIDATE RATE
+    if (!Number.isFinite(hourlyRate) || hourlyRate <= 0) {
+        showMessage("Please enter a valid hourly rate.", "error");
+        return;
+    }
+
+    // VALIDATE DATES
+    if (endDate && endDate < startDate) {
+        showMessage(
+            "Work end date cannot be earlier than work start date.",
+            "error"
+        );
+        return;
+    }
+
+    if (closingDate > startDate) {
+        showMessage(
+            "Application closing date must be on or before the work start date.",
+            "error"
+        );
+        return;
+    }
+
+    // VALIDATE TIME FOR ONE-DAY JOBS
+    if ((!endDate || endDate === startDate) && endTime <= startTime) {
+        showMessage(
+            "For a one-day job, end time must be later than start time.",
+            "error"
+        );
+        return;
+    }
+
+    // SAVE JOB
+    try {
+
+        const jobs = getSavedJobs();
+
+        const newJob = {
+
+            jobId: "JOB-" + Date.now(),
+
+            title: title,
+            category: category,
+            location: location,
+
+            description: description,
+            responsibilities: responsibilities,
+            requiredSkills: requiredSkills,
+            jobRequirements: jobRequirements,
+
+            // Keep this property for compatibility with older pages
+            requirements: jobRequirements,
+
+            vacancies: vacancies,
+            hourlyRate: hourlyRate,
+
+            startDate: startDate,
+            endDate: endDate,
+
+            startTime: startTime,
+            endTime: endTime,
+
+            closingDate: closingDate,
+            jobType: jobType,
+
+            employerName: "Employer",
+
+            status: "Active",
+            applicants: 0,
+
+            createdAt: new Date().toISOString()
+
+        };
+
+        jobs.push(newJob);
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(jobs)
+        );
+
+        // RESET FORM BEFORE DISPLAYING SUCCESS MESSAGE
+        jobForm.reset();
+
+        showMessage(
+            "✓ Job published successfully! Job ID: " + newJob.jobId,
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error("Job saving error:", error);
+
+        showMessage(
+            "Unable to save the job. Please check your browser storage and try again.",
+            "error"
+        );
+
+    }
+
+});
+
+// CLEAR MESSAGE WHEN USER MANUALLY RESETS FORM
+jobForm.addEventListener("reset", function() {
+    message.textContent = "";
+    message.className = "message";
+});
+
+</script>
+
+</body>
+</html>

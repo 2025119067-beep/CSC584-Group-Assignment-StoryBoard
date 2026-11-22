@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Jobs | Siswa-Gigs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #f7f5fc;
+    color: #30264a;
+}
+
+/* HEADER */
+header {
+    background: white;
+    padding: 19px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 15px #39216d0c;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    color: #5936a8;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: #e3ae28;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+
+nav a {
+    color: #655d75;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #7147c7;
+}
+
+/* HERO BANNER */
+.page-banner {
+    background: linear-gradient(115deg, #39216d, #6842aa 65%, #8966ca);
+    color: white;
+    padding: 52px 7% 85px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-banner::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border: 45px solid #ffffff12;
+    border-radius: 50%;
+    right: 7%;
+    top: -125px;
+}
+
+.page-banner::after {
+    content: "";
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    background: #ffffff0b;
+    border-radius: 50%;
+    right: 22%;
+    bottom: -110px;
+}
+
+.hero-content {
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-tag {
+    display: inline-block;
+    background: #ffffff20;
+    color: #f8dfa0;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 17px;
+}
+
+.page-banner h1 {
+    font-size: 36px;
+    margin-bottom: 12px;
+    letter-spacing: -0.7px;
+}
+
+.page-banner p {
+    color: #e9e0fa;
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 570px;
+}
+
+/* MAIN CONTAINER */
+.container {
+    max-width: 1200px;
+    margin: -37px auto 60px;
+    padding: 0 25px;
+    position: relative;
+    z-index: 1;
+}
+
+/* QUICK STATS */
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 27px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #eee9f7;
+    border-radius: 13px;
+    padding: 17px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 5px 18px #39216d0a;
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.icon-purple {
+    background: #eee7ff;
+}
+
+.icon-yellow {
+    background: #fff5d9;
+}
+
+.icon-green {
+    background: #e5f7ec;
+}
+
+.stat-info p {
+    font-size: 11px;
+    color: #9991a7;
+    margin-bottom: 4px;
+}
+
+.stat-info h3 {
+    font-size: 19px;
+    color: #39216d;
+}
+
+/* SEARCH PANEL */
+.search-panel {
+    background: white;
+    padding: 23px;
+    border-radius: 15px;
+    border: 1px solid #eee9f7;
+    box-shadow: 0 5px 20px #39216d09;
+    margin-bottom: 32px;
+}
+
+.search-title {
+    margin-bottom: 15px;
+}
+
+.search-title h2 {
+    font-size: 17px;
+    color: #39216d;
+    margin-bottom: 5px;
+}
+
+.search-title p {
+    color: #999;
+    font-size: 12px;
+}
+
+.search-box {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr auto;
+    gap: 11px;
+}
+
+.search-box input,
+.search-box select {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 14px;
+    border: 1px solid #e5dfed;
+    border-radius: 9px;
+    outline: none;
+    font-size: 12px;
+    color: #44365f;
+    background: #fcfbfe;
+}
+
+.search-box input:focus,
+.search-box select:focus {
+    border-color: #7952bd;
+    box-shadow: 0 0 0 3px #7952bd15;
+}
+
+.search-btn {
+    padding: 12px 21px;
+    background: #5936a8;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.search-btn:hover {
+    background: #39216d;
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    display: block;
+    margin-top: 12px;
+    color: #7952bd;
+    font-size: 11px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* SECTION HEADING */
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    color: #39216d;
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.section-heading p {
+    color: #999;
+    font-size: 12px;
+}
+
+.result-count {
+    background: #eee7ff;
+    color: #5936a8;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* JOB GRID */
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.job-card {
+    background: white;
+    border: 1px solid #eee7fa;
+    border-radius: 15px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    transition: 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px #39216d14;
+    border-color: #d8c9f4;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.category {
+    display: inline-block;
+    background: #eee7fa;
+    color: #5936a8;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.job-type {
+    color: #8c829d;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.job-card h3 {
+    color: #39216d;
+    font-size: 17px;
+    line-height: 1.4;
+    margin-bottom: 7px;
+    overflow-wrap: anywhere;
+}
+
+.employer {
+    color: #999;
+    font-size: 11px;
+    margin-bottom: 14px;
+}
+
+.job-description {
+    color: #777084;
+    font-size: 12px;
+    line-height: 1.7;
+    margin-bottom: 17px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 40px;
+}
+
+.details {
+    border-top: 1px solid #f0edf5;
+    padding-top: 15px;
+    margin-top: auto;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 11px;
+}
+
+.detail-label {
+    color: #999;
+}
+
+.detail-value {
+    color: #55496d;
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.salary-row {
+    background: #f7f2ff;
+    border-radius: 9px;
+    padding: 12px;
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.salary-label {
+    color: #88799f;
+    font-size: 10px;
+}
+
+.salary {
+    color: #5936a8;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.salary small {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.view-btn {
+    display: block;
+    text-align: center;
+    background: linear-gradient(110deg, #5936a8, #7952bd);
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.view-btn:hover {
+    background: #39216d;
+    transform: translateY(-2px);
+}
+
+/* EMPTY STATE */
+.empty-state {
+    background: white;
+    border: 1px dashed #d8cbed;
+    border-radius: 15px;
+    padding: 55px 20px;
+    text-align: center;
+    grid-column: 1 / -1;
+}
+
+.empty-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.empty-state h3 {
+    color: #39216d;
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.7;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+/* ERROR */
+.error-message {
+    background: #fff0f0;
+    border: 1px solid #f4cece;
+    color: #b33333;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    grid-column: 1 / -1;
+}
+
+/* FOOTER */
+footer {
+    background: #39216d;
+    color: #eee7ff;
+    text-align: center;
+    padding: 25px;
+    margin-top: 55px;
+    font-size: 12px;
+}
+
+/* RESPONSIVE */
+@media(max-width: 950px) {
+    .job-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-box {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 650px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 13px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        font-size: 11px;
+    }
+
+    .page-banner {
+        padding: 40px 6% 75px;
+    }
+
+    .page-banner h1 {
+        font-size: 27px;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .quick-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .search-box {
+        grid-template-columns: 1fr;
+    }
+
+    .job-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .search-panel {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">SISWA<span>-GIGS</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="student-dashboard.html">Dashboard</a>
+        <a href="browse-jobs.html" class="active">Find Jobs</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<!-- HERO BANNER -->
+<section class="page-banner">
+    <div class="hero-content">
+
+        <span class="hero-tag">YOUR CAMPUS CAREER STARTS HERE</span>
+
+        <h1>Find Your Next Opportunity</h1>
+
+        <p>
+            Discover flexible campus jobs, gain valuable work experience
+            and earn extra income while balancing your studies.
+            Your next opportunity is just one click away.
+        </p>
+
+    </div>
+</section>
+
+<main class="container">
+
+    <!-- QUICK STATS -->
+    <section class="quick-stats">
+
+        <div class="stat-card">
+            <div class="stat-icon icon-purple">💼</div>
+            <div class="stat-info">
+                <p>Available Jobs</p>
+                <h3 id="totalJobs">0</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon icon-yellow">🏷️</div>
+            <div class="stat-info">
+                <p>Job Categories</p>
+                <h3 id="totalCategories">0</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon icon-green">💰</div>
+            <div class="stat-info">
+                <p>Highest Hourly Rate</p>
+                <h3 id="highestRate">RM 0</h3>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- SEARCH PANEL -->
+    <section class="search-panel">
+
+        <div class="search-title">
+            <h2>Find a Job That Fits You</h2>
+            <p>Search and filter opportunities based on your preferences.</p>
+        </div>
+
+        <div class="search-box">
+
+            <input type="text"
+                id="searchInput"
+                placeholder="Search job title, keyword or employer...">
+
+            <select id="categoryFilter">
+                <option value="All">All Categories</option>
+                <option value="Food & Beverage">Food & Beverage</option>
+                <option value="Event & Promotion">Event & Promotion</option>
+                <option value="Administrative">Administrative</option>
+                <option value="Retail">Retail</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="locationFilter">
+                <option value="All">All Locations</option>
+            </select>
+
+            <button type="button" class="search-btn" id="searchButton">
+                Search Jobs
+            </button>
+
+        </div>
+
+        <button type="button" class="clear-btn" id="clearFilters">
+            Clear all filters ↗
+        </button>
+
+    </section>
+
+    <!-- JOB LISTINGS -->
+    <div class="section-heading">
+
+        <div>
+            <h2>Explore Opportunities</h2>
+            <p>Find a job that matches your skills and schedule.</p>
+        </div>
+
+        <span class="result-count" id="resultCount">0 jobs found</span>
+
+    </div>
+
+    <section class="job-grid" id="jobGrid">
+
+        <!-- Jobs will be loaded from localStorage -->
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Siswa-Gigs | Your Campus. Your Opportunities. Your Future.
+</footer>
+
+<script>
+
+const STORAGE_KEY = "siswaGigsJobs";
+
+const jobGrid = document.getElementById("jobGrid");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const locationFilter = document.getElementById("locationFilter");
+
+let allJobs = [];
+let availableJobs = [];
+
+// READ SAVED JOBS
+function loadJobs() {
+
+    try {
+
+        const savedData = localStorage.getItem(STORAGE_KEY);
+
+        if (!savedData) {
+            allJobs = [];
+        } else {
+
+            const parsedData = JSON.parse(savedData);
+
+            if (Array.isArray(parsedData)) {
+                allJobs = parsedData;
+            } else if (parsedData && typeof parsedData === "object") {
+                allJobs = Object.values(parsedData);
+            } else {
+                allJobs = [];
+            }
+
+        }
+
+        // Only show active jobs with an open application deadline
+        const today = new Date().toISOString().slice(0, 10);
+
+        availableJobs = allJobs.filter(job => {
+
+            if (!job || job.status !== "Active") {
+                return false;
+            }
+
+            if (job.closingDate && job.closingDate < today) {
+                return false;
+            }
+
+            return true;
+
+        });
+
+        populateLocations();
+        updateStatistics();
+        displayJobs();
+
+    } catch (error) {
+
+        console.error("Error loading jobs:", error);
+
+        jobGrid.innerHTML = `
+            <div class="error-message">
+                Unable to load job listings. Please check your browser storage.
+            </div>
+        `;
+
+    }
+
+}
+
+// POPULATE LOCATION FILTER
+function populateLocations() {
+
+    const previousValue = locationFilter.value;
+
+    locationFilter.innerHTML = '<option value="All">All Locations</option>';
+
+    const locations = [
+        ...new Set(
+            availableJobs
+                .map(job => job.location)
+                .filter(location => location && location.trim() !== "")
+        )
+    ];
+
+    locations.sort();
+
+    locations.forEach(location => {
+
+        const option = document.createElement("option");
+
+        option.value = location;
+        option.textContent = location;
+
+        locationFilter.appendChild(option);
+
+    });
+
+    if (locations.includes(previousValue)) {
+        locationFilter.value = previousValue;
+    }
+
+}
+
+// UPDATE QUICK STATISTICS
+function updateStatistics() {
+
+    const total = availableJobs.length;
+
+    const categories = new Set(
+        availableJobs.map(job => job.category).filter(Boolean)
+    );
+
+    const highest = availableJobs.length
+        ? Math.max(...availableJobs.map(job => Number(job.hourlyRate) || 0))
+        : 0;
+
+    document.getElementById("totalJobs").textContent = total;
+
+    document.getElementById("totalCategories").textContent =
+        categories.size;
+
+    document.getElementById("highestRate").textContent =
+        "RM " + highest.toFixed(2);
+
+}
+
+// FORMAT DATE
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "Not specified";
+    }
+
+    const date = new Date(dateValue + "T00:00:00");
+
+    if (Number.isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+    return date.toLocaleDateString("en-MY", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+
+}
+
+// FORMAT WORK PERIOD
+function getWorkPeriod(job) {
+
+    if (!job.startDate) {
+        return "Flexible schedule";
+    }
+
+    if (!job.endDate || job.startDate === job.endDate) {
+        return formatDate(job.startDate);
+    }
+
+    return formatDate(job.startDate) + " - " + formatDate(job.endDate);
+
+}
+
+// CREATE JOB CARD
+function createJobCard(job) {
+
+    const card = document.createElement("article");
+    card.className = "job-card";
+
+    const top = document.createElement("div");
+    top.className = "card-top";
+
+    const category = document.createElement("span");
+    category.className = "category";
+    category.textContent = job.category || "Other";
+
+    const type = document.createElement("span");
+    type.className = "job-type";
+    type.textContent = job.jobType || "Part-time";
+
+    top.append(category, type);
+
+    const title = document.createElement("h3");
+    title.textContent = job.title || "Untitled Job";
+
+    const employer = document.createElement("p");
+    employer.className = "employer";
+    employer.textContent = job.employerName || "Campus Employer";
+
+    const description = document.createElement("p");
+    description.className = "job-description";
+    description.textContent =
+        job.description || "Explore this campus job opportunity.";
+
+    const details = document.createElement("div");
+    details.className = "details";
+
+    const detailItems = [
+        ["Location", job.location || "Not specified"],
+        ["Work Date", getWorkPeriod(job)],
+        ["Working Time", job.startTime && job.endTime
+            ? job.startTime + " - " + job.endTime
+            : "Not specified"],
+        ["Vacancies", (Number(job.vacancies) || 0) + " available"],
+        ["Apply Before", formatDate(job.closingDate)]
+    ];
+
+    detailItems.forEach(item => {
+
+        const row = document.createElement("div");
+        row.className = "detail-row";
+
+        const label = document.createElement("span");
+        label.className = "detail-label";
+        label.textContent = item[0];
+
+        const value = document.createElement("span");
+        value.className = "detail-value";
+        value.textContent = item[1];
+
+        row.append(label, value);
+        details.appendChild(row);
+
+    });
+
+    const salaryRow = document.createElement("div");
+    salaryRow.className = "salary-row";
+
+    const salaryLabel = document.createElement("span");
+    salaryLabel.className = "salary-label";
+    salaryLabel.textContent = "Earning per hour";
+
+    const salary = document.createElement("span");
+    salary.className = "salary";
+
+    const rate = Number(job.hourlyRate) || 0;
+
+    salary.textContent = "RM " + rate.toFixed(2);
+
+    const small = document.createElement("small");
+    small.textContent = " / hour";
+
+    salary.appendChild(small);
+    salaryRow.append(salaryLabel, salary);
+
+    const viewButton = document.createElement("a");
+    viewButton.className = "view-btn";
+    viewButton.textContent = "View Job Details →";
+
+    if (job.jobId) {
+        viewButton.href =
+            "job-details.html?jobId=" + encodeURIComponent(job.jobId);
+    } else {
+        viewButton.href = "job-details.html";
+    }
+
+    card.append(
+        top,
+        title,
+        employer,
+        description,
+        details,
+        salaryRow,
+        viewButton
+    );
+
+    return card;
+
+}
+
+// DISPLAY FILTERED JOBS
+function displayJobs() {
+
+    const keyword = searchInput.value.toLowerCase().trim();
+    const selectedCategory = categoryFilter.value;
+    const selectedLocation = locationFilter.value;
+
+    const filteredJobs = availableJobs.filter(job => {
+
+        const searchableText = [
+            job.title,
+            job.category,
+            job.location,
+            job.description,
+            job.requirements,
+            job.employerName
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = searchableText.includes(keyword);
+
+        const matchesCategory =
+            selectedCategory === "All" ||
+            job.category === selectedCategory;
+
+        const matchesLocation =
+            selectedLocation === "All" ||
+            job.location === selectedLocation;
+
+        return matchesSearch && matchesCategory && matchesLocation;
+
+    });
+
+    document.getElementById("resultCount").textContent =
+        filteredJobs.length +
+        (filteredJobs.length === 1 ? " job found" : " jobs found");
+
+    jobGrid.innerHTML = "";
+
+    if (filteredJobs.length === 0) {
+
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+
+        const icon = document.createElement("div");
+        icon.className = "empty-icon";
+        icon.textContent = availableJobs.length === 0 ? "💼" : "🔎";
+
+        const heading = document.createElement("h3");
+        heading.textContent = availableJobs.length === 0
+            ? "No Jobs Available Yet"
+            : "No Matching Jobs Found";
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = availableJobs.length === 0
+            ? "There are currently no active job listings. Please check again when employers publish new opportunities."
+            : "Try changing your search keyword, category or location to discover other opportunities.";
+
+        empty.append(icon, heading, paragraph);
+        jobGrid.appendChild(empty);
+
+        return;
+
+    }
+
+    filteredJobs.forEach(job => {
+        jobGrid.appendChild(createJobCard(job));
+    });
+
+}
+
+// SEARCH BUTTON
+document.getElementById("searchButton").addEventListener("click", function() {
+    displayJobs();
+});
+
+// LIVE SEARCH
+searchInput.addEventListener("input", displayJobs);
+
+categoryFilter.addEventListener("change", displayJobs);
+
+locationFilter.addEventListener("change", displayJobs);
+
+// CLEAR FILTERS
+document.getElementById("clearFilters").addEventListener("click", function() {
+
+    searchInput.value = "";
+    categoryFilter.value = "All";
+    locationFilter.value = "All";
+
+    displayJobs();
+
+});
+
+// INITIAL LOAD
+loadJobs();
+
+</script>
+
+</body>
+</html>

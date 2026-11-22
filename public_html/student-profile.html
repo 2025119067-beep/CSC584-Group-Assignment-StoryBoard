@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | Siswa-Gigs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f3ff;
+            color: #30234a;
+        }
+
+        header {
+            background: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(57, 33, 109, 0.07);
+        }
+
+        .logo {
+            color: #5936a8;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #7147c7;
+        }
+
+        .banner {
+            background: linear-gradient(120deg, #39216d, #8058ce);
+            color: white;
+            padding: 40px 7%;
+        }
+
+        .banner h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            color: #eee7ff;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 35px auto;
+            padding: 0 25px;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #eee7fa;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #eee7fa;
+            color: #5936a8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 34px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .profile-info h2 {
+            color: #39216d;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .profile-info p {
+            color: #888;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .edit-btn {
+            margin-left: auto;
+            background: #f5cd55;
+            color: #39216d;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 13px;
+            border: 1px solid #eee7fa;
+            margin-bottom: 20px;
+        }
+
+        .info-card h3 {
+            color: #39216d;
+            font-size: 18px;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eeeaf5;
+        }
+
+        .info-row {
+            margin-bottom: 17px;
+        }
+
+        .info-row span {
+            display: block;
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .info-row strong {
+            color: #5936a8;
+            font-size: 14px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .skill {
+            background: #eee7fa;
+            color: #5936a8;
+            padding: 9px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .experience p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .experience h4 {
+            color: #5936a8;
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .footer {
+            background: #39216d;
+            color: #eee7ff;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .edit-btn {
+                margin-left: 0;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">SISWA-GIGS</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="browse-jobs.html">Find Jobs</a>
+            <a href="my-applications.html">Applications</a>
+            <a href="login.html">Logout</a>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>My Student Profile</h1>
+        <p>Manage your personal information, skills and work experience.</p>
+    </section>
+
+    <main class="container">
+
+        <section class="profile-card">
+
+            <div class="avatar">A</div>
+
+            <div class="profile-info">
+                <h2>Aina Insyirah</h2>
+                <p>Student ID: 2026123456</p>
+                <p>Information Technology Student</p>
+                <p>UiTM Shah Alam</p>
+            </div>
+
+            <a href="#" class="edit-btn">Edit Profile</a>
+
+        </section>
+
+        <section class="content-grid">
+
+            <div>
+
+                <div class="info-card">
+                    <h3>Personal Information</h3>
+
+                    <div class="info-row">
+                        <span>Full Name</span>
+                        <strong>Aina Insyirah</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Student ID</span>
+                        <strong>2026123456</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Email Address</span>
+                        <strong>aina@student.uitm.edu.my</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Contact Number</span>
+                        <strong>012-345 6789</strong>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Academic Information</h3>
+
+                    <div class="info-row">
+                        <span>University</span>
+                        <strong>Universiti Teknologi MARA</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Faculty</span>
+                        <strong>Faculty of Information Science</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Programme</span>
+                        <strong>Information Technology</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Study Status</span>
+                        <strong>Currently Enrolled</strong>
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="info-card">
+                    <h3>Skills & Competencies</h3>
+
+                    <div class="skills">
+                        <span class="skill">Communication</span>
+                        <span class="skill">Teamwork</span>
+                        <span class="skill">Microsoft Office</span>
+                        <span class="skill">Time Management</span>
+                        <span class="skill">Customer Service</span>
+                        <span class="skill">Problem Solving</span>
+                    </div>
+                </div>
+
+                <div class="info-card experience">
+                    <h3>Work Experience</h3>
+
+                    <h4>Campus Event Volunteer</h4>
+                    <p>
+                        Assisted with event preparation, participant
+                        registration and coordination of university activities.
+                    </p>
+                    <br>
+
+                    <h4>Student Activities</h4>
+                    <p>
+                        Participated in university programmes and group
+                        projects, developing teamwork and communication skills.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Profile Completion</h3>
+
+                    <div style="background:#eee7fa; height:10px; border-radius:10px;">
+                        <div style="background:#7147c7; width:85%; height:10px; border-radius:10px;"></div>
+                    </div>
+
+                    <p style="color:#888; font-size:12px; margin-top:10px;">
+                        85% completed — Keep your profile updated!
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        © 2026 Siswa-Gigs | Your Campus. Your Opportunities. Your Future.
+    </footer>
+
+</body>
+</html>

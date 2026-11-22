@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employer Dashboard | Siswa-Gigs</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f3fa;color:#30264a}
+header{background:#39216d;color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:bold}.logo span{color:#f5cd55}
+nav a{color:white;text-decoration:none;margin-left:20px;font-size:13px}
+.container{width:88%;max-width:1200px;margin:35px auto}
+.welcome{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px}
+h1{font-size:27px;margin-bottom:7px}
+.welcome p,.intro{color:#777;font-size:13px}
+.btn{display:inline-block;border:0;border-radius:7px;padding:11px 16px;font-size:12px;font-weight:bold;text-decoration:none;cursor:pointer}
+.primary{background:#5936a8;color:white}.secondary{background:#eee6ff;color:#5936a8}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.stat,.section{background:white;padding:22px;border-radius:12px;box-shadow:0 3px 12px #00000008}
+.stat p{font-size:13px;color:#777;margin-bottom:10px}
+.stat h2{font-size:26px;color:#5936a8}
+.layout{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.section{margin-bottom:20px}
+.section h2{font-size:18px;margin-bottom:15px}
+.job{border:1px solid #eee9f5;border-radius:9px;padding:15px;margin-bottom:12px}
+.job h3,.person h3{font-size:14px;margin-bottom:6px}
+.job p,.person p{font-size:12px;color:#777;margin-top:5px}
+.tag{display:inline-block;border-radius:20px;padding:6px 10px;font-size:10px;font-weight:bold}
+.active{background:#e6f5e9;color:#278342}
+.pending{background:#fff3d3;color:#956b13}
+.ready{background:#fff3d3;color:#956b13}
+.paid{background:#e6f5e9;color:#278342}
+.not-recorded{background:#eee6ff;color:#5936a8}
+.person{border:1px solid #eee9f5;border-radius:9px;padding:16px;margin-bottom:13px}
+.person-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.person .amount{font-size:19px;color:#5936a8;font-weight:bold;margin-top:12px}
+.person .muted{font-size:12px;color:#777;margin-top:4px}
+.record-form{display:none;background:#f8f5fd;border:1px solid #e6def2;border-radius:9px;padding:15px;margin-top:14px}
+.record-form label{display:block;font-size:12px;font-weight:bold;margin-bottom:7px}
+.record-form input{width:100%;padding:12px;border:1px solid #ddd5ed;border-radius:7px;font-size:14px}
+.calculation{background:#eee6ff;border-radius:8px;padding:13px;margin-top:13px}
+.calc-row,.summary-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;font-size:12px;border-bottom:1px solid #ddd3f0}
+.calc-row:last-child,.summary-row:last-child{border:0}
+.calc-total{font-weight:bold;color:#5936a8;font-size:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.note{background:#fff8e5;border-left:4px solid #f5cd55;padding:12px;border-radius:6px;color:#715719;font-size:12px;line-height:1.6;margin-top:15px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick a{background:#f5f1fc;color:#5936a8;text-decoration:none;text-align:center;padding:14px 8px;border-radius:8px;font-size:12px;font-weight:bold}
+.shift{background:#f5f1fc;padding:13px;border-radius:8px;margin-bottom:10px}
+.shift h3{font-size:13px;margin-bottom:5px}
+.shift p{font-size:12px;color:#777;margin-top:4px}
+footer{text-align:center;color:#888;font-size:12px;padding:22px}
+.add-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.add-grid label{display:block;font-size:12px;font-weight:bold;margin:0 0 6px}
+.add-grid input{width:100%;padding:11px;border:1px solid #ddd5ed;border-radius:7px}
+@media(max-width:800px){
+.container{width:94%}
+.layout{grid-template-columns:1fr}
+.stats{grid-template-columns:1fr}
+nav{display:none}
+.welcome{align-items:flex-start;flex-direction:column}
+.add-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Siswa<span>-Gigs</span></div>
+    <nav>
+        <a href="employer-dashboard.html">Dashboard</a>
+        <a href="create-job.html">Create Job</a>
+        <a href="manage-jobs.html">Manage Jobs</a>
+        <a href="view-applicants.html">Applicants</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <div>
+            <h1>Employer Dashboard</h1>
+            <p>Welcome back, Campus F&amp;B Vendor!</p>
+        </div>
+        <a href="create-job.html" class="btn primary">+ Create New Job</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat"><p>Total Job Listings</p><h2>08</h2></div>
+        <div class="stat"><p>Total Applicants</p><h2>24</h2></div>
+        <div class="stat"><p>Students Hired</p><h2>12</h2></div>
+    </div>
+
+    <div class="layout">
+        <main>
+
+            <section class="section">
+                <h2>Recent Job Listings</h2>
+
+                <div class="job">
+                    <h3>F&amp;B Service Crew</h3>
+                    <p>RM10.00 / hour · Applicants: 8</p>
+                    <span class="tag active">Active</span>
+                    <div class="actions">
+                        <a href="manage-jobs.html" class="btn secondary">Manage Job</a>
+                        <a href="view-applicants.html" class="btn secondary">View Applicants</a>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <h3>Event Crew Assistant</h3>
+                    <p>RM15.00 / hour · Applicants: 10</p>
+                    <span class="tag active">Active</span>
+                    <div class="actions">
+                        <a href="manage-jobs.html" class="btn secondary">Manage Job</a>
+                        <a href="view-applicants.html" class="btn secondary">View Applicants</a>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <h3>Document Sorting Assistant</h3>
+                    <p>RM10.00 / hour · Applicants: 6</p>
+                    <span class="tag active">Active</span>
+                    <div class="actions">
+                        <a href="manage-jobs.html" class="btn secondary">Manage Job</a>
+                        <a href="view-applicants.html" class="btn secondary">View Applicants</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Recent Applications</h2>
+                <div class="job">
+                    <h3>Nur Aisyah</h3>
+                    <p>F&amp;B Service Crew</p>
+                    <span class="tag pending">Pending</span>
+                </div>
+                <div class="job">
+                    <h3>Muhammad Danish</h3>
+                    <p>Event Crew Assistant</p>
+                    <span class="tag active">Hired</span>
+                </div>
+                <div class="job">
+                    <h3>Nur Amirah</h3>
+                    <p>Document Sorting Assistant</p>
+                    <span class="tag pending">Rejected</span>
+                </div>
+                <a href="view-applicants.html" class="btn primary">View All Applicants</a>
+            </section>
+
+            <section class="section">
+                <h2>Completed Jobs &amp; Payment</h2>
+                <p class="intro">Enter the total working hours. The system calculates wages and the 2% platform fee automatically.</p>
+                <br>
+
+                <!-- ADD NEW STUDENT FORM -->
+                <div class="section" style="padding:16px;background:#faf8fe;border:1px solid #e6def2;margin-top:16px;box-shadow:none">
+
+                    <h3 style="font-size:14px;margin-bottom:12px;color:#39216d">
+                        + Add Another Completed Job
+                    </h3>
+
+                    <p class="intro" style="margin-bottom:12px">
+                        Add a student who has completed a job, then record their working hours to generate a payment.
+                    </p>
+
+                    <div class="add-grid">
+                        <div>
+                            <label for="new-student-name">Student Name</label>
+                            <input id="new-student-name" type="text" placeholder="e.g. Nur Amirah">
+                        </div>
+
+                        <div>
+                            <label for="new-student-id">Student ID / Username</label>
+                            <input id="new-student-id" type="text" placeholder="e.g. amirah">
+                        </div>
+
+                        <div>
+                            <label for="new-student-job">Completed Job</label>
+                            <input id="new-student-job" type="text" placeholder="e.g. Document Sorting Assistant">
+                        </div>
+
+                        <div>
+                            <label for="new-student-rate">Hourly Rate (RM)</label>
+                            <input id="new-student-rate" type="number" min="0.01" step="0.01" placeholder="e.g. 12.00">
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn primary" type="button" onclick="addCompletedStudent()">Add Student</button>
+                    </div>
+
+                    <p class="intro" style="margin-top:8px">
+                        Use a unique Student ID / Username for each student. Existing student records will not be overwritten.
+                    </p>
+                </div>
+
+                <!-- DYNAMIC STUDENT PAYMENT CARDS -->
+                <div id="completed-students-list" style="margin-top:16px"></div>
+
+                <div class="note">
+                    <strong>Payment information:</strong>
+                    Employer pays the gross wages through Siswa-Gigs.
+                    The system deducts 2% as platform fee and allocates the remaining 98% to the student.
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Payment Summary</h2>
+                <div class="summary-row">
+                    <span>Total Gross Wages</span>
+                    <strong id="summarygross">RM0.00</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Platform Fees</span>
+                    <strong id="summaryfee">RM0.00</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Student Net Payout</span>
+                    <strong id="summarynet">RM0.00</strong>
+                </div>
+                <p class="intro" style="margin-top:10px">
+                    Summary updates when payment records are saved.
+                </p>
+            </section>
+
+        </main>
+
+        <aside>
+            <section class="section">
+                <h2>Quick Actions</h2>
+                <div class="quick">
+                    <a href="create-job.html">+ Create Job</a>
+                    <a href="manage-jobs.html">Manage Jobs</a>
+                    <a href="view-applicants.html">View Applicants</a>
+                    <a href="my-calendar.html">Work Calendar</a>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Upcoming Work Shifts</h2>
+                <div class="shift">
+                    <h3>F&amp;B Service Crew</h3>
+                    <p>Nur Aisyah</p>
+                    <p>4 November · 10 AM – 2 PM</p>
+                </div>
+                <div class="shift">
+                    <h3>Event Crew Assistant</h3>
+                    <p>Muhammad Danish</p>
+                    <p>11 November · 8 AM – 5 PM</p>
+                </div>
+                <a href="my-calendar.html" class="btn primary">View Work Calendar</a>
+            </section>
+        </aside>
+    </div>
+</div>
+
+<footer>© 2026 Siswa-Gigs | Campus Part-Time Job Portal</footer>
+
+<script>
+const STORAGE_KEY = "siswaGigsPayments";
+const STUDENTS_STORAGE_KEY = "siswaGigsCompletedStudents";
+
+const defaultStudents = {
+    aisyah: {
+        name: "Nur Aisyah",
+        job: "Event Crew",
+        rate: 10
+    },
+    danish: {
+        name: "Muhammad Danish",
+        job: "Event Crew Assistant",
+        rate: 15
+    }
+};
+
+let students = {};
+
+function getRecords() {
+    try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        return Array.isArray(data) ? {} : data;
+    } catch(e) {
+        return {};
+    }
+}
+
+function getCustomStudents() {
+    try {
+        return JSON.parse(localStorage.getItem(STUDENTS_STORAGE_KEY)) || {};
+    } catch(e) {
+        return {};
+    }
+}
+
+function loadStudents() {
+    students = Object.assign({}, defaultStudents, getCustomStudents());
+}
+
+function saveRecords(records) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+}
+
+function saveCustomStudents() {
+    const custom = {};
+
+    Object.keys(students).forEach(id => {
+        if (!defaultStudents[id]) {
+            custom[id] = students[id];
+        }
+    });
+
+    localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(custom));
+}
+
+function money(value) {
+    return "RM" + Number(value || 0).toFixed(2);
+}
+
+function totals(hours, rate) {
+    const gross = Math.round(hours * rate * 100) / 100;
+    const fee = Math.round(gross * 2) / 100;
+
+    return {
+        gross: gross,
+        fee: fee,
+        net: Math.round((gross - fee) * 100) / 100
+    };
+}
+
+function safeText(value) {
+    return String(value).replace(/[&<>"']/g, function(c) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[c];
+    });
+}
+
+/* ADD NEW STUDENT */
+function addCompletedStudent() {
+    const name = document.getElementById("new-student-name").value.trim();
+    let id = document.getElementById("new-student-id").value.trim().toLowerCase();
+    const job = document.getElementById("new-student-job").value.trim();
+    const rate = Number(document.getElementById("new-student-rate").value);
+
+    if (!name || !id || !job || !Number.isFinite(rate) || rate <= 0) {
+        alert("Please complete all fields and enter a valid hourly rate.");
+        return;
+    }
+
+    id = id.replace(/[^a-z0-9_-]/g, "");
+
+    if (!id) {
+        alert("Please use a Student ID containing letters or numbers.");
+        return;
+    }
+
+    if (students[id] || getRecords()[id]) {
+        alert("This Student ID already exists. Please use a different ID.");
+        return;
+    }
+
+    students[id] = {
+        name: name,
+        job: job,
+        rate: rate
+    };
+
+    saveCustomStudents();
+
+    document.getElementById("new-student-name").value = "";
+    document.getElementById("new-student-id").value = "";
+    document.getElementById("new-student-job").value = "";
+    document.getElementById("new-student-rate").value = "";
+
+    renderDashboard();
+
+    alert("Student added successfully. You can now record working hours.");
+}
+
+function openForm(id) {
+    const record = getRecords()[id];
+
+    if (record && (
+        record.status === "Ready for Payment" ||
+        record.status === "Payment Successful"
+    )) {
+        return;
+    }
+
+    const form = document.getElementById("form-" + id);
+
+    if (form) {
+        form.style.display = "block";
+    }
+}
+
+function closeForm(id) {
+    const form = document.getElementById("form-" + id);
+
+    if (form) {
+        form.style.display = "none";
+    }
+}
+
+function calculate(id) {
+    const hours = Number(document.getElementById("input-" + id).value) || 0;
+    const t = totals(hours, students[id].rate);
+
+    document.getElementById("calcgross-" + id).textContent = money(t.gross);
+    document.getElementById("calcfee-" + id).textContent = "-" + money(t.fee);
+    document.getElementById("calcnet-" + id).textContent = money(t.net);
+    document.getElementById("calcpay-" + id).textContent = money(t.gross);
+}
+
+function generatePayment(id) {
+    const hours = Number(document.getElementById("input-" + id).value);
+
+    if (!Number.isFinite(hours) || hours <= 0) {
+        alert("Please enter valid total working hours.");
+        return;
+    }
+
+    const existing = getRecords();
+
+    if (existing[id] && existing[id].status === "Payment Successful") {
+        alert("This payment has already been completed.");
+        return;
+    }
+
+    const t = totals(hours, students[id].rate);
+
+    if (!confirm(
+        "Confirm wage calculation?\n\nStudent: " + students[id].name +
+        "\nWorking Hours: " + hours +
+        "\nGross Wages: " + money(t.gross) +
+        "\nPlatform Fee (2%): " + money(t.fee) +
+        "\nStudent Net Earnings: " + money(t.net)
+    )) {
+        return;
+    }
+
+    existing[id] = {
+        studentId: id,
+        studentName: students[id].name,
+        job: students[id].job,
+        hours: hours,
+        rate: students[id].rate,
+        gross: t.gross,
+        fee: t.fee,
+        net: t.net,
+        status: "Ready for Payment",
+        payoutStatus: "Pending"
+    };
+
+    saveRecords(existing);
+    renderDashboard();
+
+    alert("Payment generated. Status: Ready for Payment.");
+}
+
+/* DISPLAY ALL STUDENTS */
+function renderDashboard() {
+    loadStudents();
+
+    const records = getRecords();
+    const list = document.getElementById("completed-students-list");
+
+    let totalGross = 0;
+    let totalFee = 0;
+    let totalNet = 0;
+
+    list.innerHTML = "";
+
+    Object.keys(students).forEach(id => {
+        const student = students[id];
+        const record = records[id];
+
+        const card = document.createElement("div");
+        card.className = "person";
+
+        let statusText = "Hours Not Recorded";
+        let statusClass = "not-recorded";
+        let hoursText = "Working Hours: Not recorded";
+        let grossText = "RM0.00";
+
+        let actionHTML = `
+            <button class="btn secondary" onclick="openForm('${id}')">
+                Record Working Hours
+            </button>
+        `;
+
+        if (record) {
+            hoursText = "Working Hours: " + record.hours + " hours";
+            grossText = money(record.gross);
+
+            totalGross += Number(record.gross || 0);
+            totalFee += Number(record.fee || 0);
+            totalNet += Number(record.net || 0);
+
+            if (record.status === "Payment Successful") {
+                statusText = "Payment Successful";
+                statusClass = "paid";
+
+                actionHTML = `
+                    <a class="btn secondary"
+                       href="payment-success.html?student=${encodeURIComponent(id)}">
+                       View Receipt
+                    </a>
+                `;
+            } else {
+                statusText = "Ready for Payment";
+                statusClass = "ready";
+
+                actionHTML = `
+                    <a class="btn primary"
+                       href="make-payment.html?student=${encodeURIComponent(id)}">
+                       Proceed to Payment
+                    </a>
+                `;
+            }
+        }
+
+        const formHTML = record ? "" : `
+            <div class="record-form" id="form-${id}">
+
+                <label for="input-${id}">Total Working Hours</label>
+
+                <input
+                    type="number"
+                    id="input-${id}"
+                    min="0.5"
+                    step="0.5"
+                    placeholder="Enter total hours"
+                    oninput="calculate('${id}')"
+                >
+
+                <p class="muted">
+                    Hourly Rate: ${money(student.rate)} (from job details)
+                </p>
+
+                <div class="calculation">
+                    <div class="calc-row">
+                        <span>Gross Wages</span>
+                        <strong id="calcgross-${id}">RM0.00</strong>
+                    </div>
+
+                    <div class="calc-row">
+                        <span>Platform Fee (2%)</span>
+                        <strong id="calcfee-${id}">RM0.00</strong>
+                    </div>
+
+                    <div class="calc-row calc-total">
+                        <span>Student Net Earnings</span>
+                        <strong id="calcnet-${id}">RM0.00</strong>
+                    </div>
+
+                    <div class="calc-row">
+                        <span>Employer Pays</span>
+                        <strong id="calcpay-${id}">RM0.00</strong>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn primary" onclick="generatePayment('${id}')">
+                        Generate Payment
+                    </button>
+
+                    <button class="btn secondary" onclick="closeForm('${id}')">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        `;
+
+        card.innerHTML = `
+            <div class="person-top">
+                <div>
+                    <h3>${safeText(student.name)}</h3>
+                    <p>Job: ${safeText(student.job)}</p>
+                    <p>Hourly Rate: ${money(student.rate)}</p>
+                    <p>${safeText(hoursText)}</p>
+                </div>
+
+                <span class="tag ${statusClass}">
+                    ${statusText}
+                </span>
+            </div>
+
+            <div class="amount">${grossText}</div>
+            <p class="muted">Gross Wage</p>
+
+            <div class="actions">${actionHTML}</div>
+
+            ${formHTML}
+        `;
+
+        list.appendChild(card);
+    });
+
+    document.getElementById("summarygross").textContent = money(totalGross);
+    document.getElementById("summaryfee").textContent = money(totalFee);
+    document.getElementById("summarynet").textContent = money(totalNet);
+}
+
+window.addEventListener("DOMContentLoaded", renderDashboard);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,939 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Applicants | Siswa-Gigs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f3ff;
+            color: #30234a;
+        }
+
+        header {
+            background: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(57, 33, 109, 0.07);
+        }
+
+        .logo {
+            color: #5936a8;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #7147c7;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h1 {
+            color: #39216d;
+            font-size: 28px;
+            margin-bottom: 9px;
+        }
+
+        .page-heading p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 17px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eee7fa;
+            box-shadow: 0 4px 15px rgba(57, 33, 109, 0.04);
+        }
+
+        .stat-card p {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h2 {
+            color: #39216d;
+            font-size: 27px;
+        }
+
+        .stat-card.pending h2 {
+            color: #d49a19;
+        }
+
+        .stat-card.hired h2 {
+            color: #24934a;
+        }
+
+        .stat-card.rejected h2 {
+            color: #d04444;
+        }
+
+        .content-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            border: 1px solid #eee7fa;
+            box-shadow: 0 5px 20px rgba(57, 33, 109, 0.05);
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .toolbar h2 {
+            color: #39216d;
+            font-size: 19px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 11px 13px;
+            border: 1px solid #ddd5ee;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            background: white;
+        }
+
+        .filters input {
+            min-width: 220px;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            border-color: #7147c7;
+        }
+
+        .applicant-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .applicant-card {
+            border: 1px solid #eee7fa;
+            border-radius: 12px;
+            padding: 20px;
+            background: #fff;
+        }
+
+        .applicant-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .applicant-name {
+            color: #39216d;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .applicant-job {
+            color: #7147c7;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            background: #fff4d6;
+            color: #9a6b00;
+        }
+
+        .status-hired {
+            background: #e4f7e9;
+            color: #21833e;
+        }
+
+        .status-rejected {
+            background: #ffe9e9;
+            color: #bd3333;
+        }
+
+        .applicant-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px 25px;
+            padding: 17px 0;
+            border-top: 1px solid #f0ebf7;
+            border-bottom: 1px solid #f0ebf7;
+        }
+
+        .detail-item label {
+            color: #999;
+            font-size: 11px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .detail-item p {
+            color: #514565;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .status-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .status-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-control label {
+            font-size: 12px;
+            color: #39216d;
+            font-weight: bold;
+        }
+
+        .status-control select {
+            padding: 10px 12px;
+            border: 1px solid #ddd5ee;
+            border-radius: 7px;
+            background: white;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .update-btn {
+            background: #7147c7;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 11px 17px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .update-btn:hover {
+            background: #5936a8;
+        }
+
+        .update-btn:disabled {
+            background: #bbb;
+            cursor: not-allowed;
+        }
+
+        .date-text {
+            color: #999;
+            font-size: 11px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 55px 20px;
+            color: #888;
+        }
+
+        .empty-state h3 {
+            color: #39216d;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .notice {
+            display: none;
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 13px;
+        }
+
+        .notice.success {
+            display: block;
+            background: #effaf1;
+            color: #237a3b;
+            border: 1px solid #c8ebcf;
+        }
+
+        .notice.error {
+            display: block;
+            background: #fff0f0;
+            color: #b42318;
+            border: 1px solid #ffd0d0;
+        }
+
+        footer {
+            background: #39216d;
+            color: #eee7ff;
+            text-align: center;
+            padding: 25px;
+            margin-top: 45px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 750px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .applicant-details {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .toolbar {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .content-card {
+                padding: 16px;
+            }
+
+            .applicant-card {
+                padding: 15px;
+            }
+
+            .filters,
+            .filters input,
+            .filters select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">SISWA-GIGS</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="employer-dashboard.html">Dashboard</a>
+            <a href="manage-jobs.html">Manage Jobs</a>
+            <a href="login.html">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <div class="page-heading">
+            <h1>Manage Applicants</h1>
+            <p>
+                Review student applications and manage their application status.
+            </p>
+        </div>
+
+        <!-- APPLICATION STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <p>Total Applications</p>
+                <h2 id="totalCount">0</h2>
+            </div>
+
+            <div class="stat-card pending">
+                <p>Pending</p>
+                <h2 id="pendingCount">0</h2>
+            </div>
+
+            <div class="stat-card hired">
+                <p>Hired</p>
+                <h2 id="hiredCount">0</h2>
+            </div>
+
+            <div class="stat-card rejected">
+                <p>Rejected</p>
+                <h2 id="rejectedCount">0</h2>
+            </div>
+
+        </section>
+
+        <!-- APPLICANT MANAGEMENT -->
+
+        <section class="content-card">
+
+            <div class="toolbar">
+
+                <h2>Student Applications</h2>
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search student or job...">
+
+                    <select id="filterStatus">
+                        <option value="All">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Hired">Hired</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div id="notice" class="notice"></div>
+
+            <div id="applicantList" class="applicant-list">
+
+                <div class="empty-state">
+                    <h3>Loading Applications...</h3>
+                    <p>Please wait.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        © 2026 Siswa-Gigs | Your Campus. Your Opportunities. Your Future.
+    </footer>
+
+
+    <script>
+
+        // =====================================
+        // STORAGE SETTINGS
+        // =====================================
+
+        const APPLICATIONS_KEY = "siswaGigsApplications";
+
+        let applications = [];
+
+        // =====================================
+        // LOAD APPLICATIONS
+        // =====================================
+
+        function loadApplications() {
+
+            try {
+
+                const savedData = JSON.parse(
+                    localStorage.getItem(APPLICATIONS_KEY) || "[]"
+                );
+
+                if (Array.isArray(savedData)) {
+
+                    applications = savedData;
+
+                } else if (
+                    savedData &&
+                    typeof savedData === "object"
+                ) {
+
+                    applications = Object.values(savedData);
+
+                } else {
+
+                    applications = [];
+
+                }
+
+            } catch (error) {
+
+                applications = [];
+
+                console.error(
+                    "Unable to load applications:",
+                    error
+                );
+
+            }
+
+            renderApplications();
+
+        }
+
+        // =====================================
+        // SAVE APPLICATIONS
+        // =====================================
+
+        function saveApplications() {
+
+            localStorage.setItem(
+                APPLICATIONS_KEY,
+                JSON.stringify(applications)
+            );
+
+        }
+
+        // =====================================
+        // FORMAT DATE
+        // =====================================
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return "Not available";
+            }
+
+            const date = new Date(dateValue);
+
+            if (isNaN(date.getTime())) {
+                return dateValue;
+            }
+
+            return date.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            });
+
+        }
+
+        // =====================================
+        // UPDATE STATISTICS
+        // =====================================
+
+        function updateStatistics() {
+
+            const total = applications.length;
+
+            const pending = applications.filter(
+                app => app.status === "Pending"
+            ).length;
+
+            const hired = applications.filter(
+                app => app.status === "Hired"
+            ).length;
+
+            const rejected = applications.filter(
+                app => app.status === "Rejected"
+            ).length;
+
+            document.getElementById("totalCount").textContent = total;
+
+            document.getElementById("pendingCount").textContent = pending;
+
+            document.getElementById("hiredCount").textContent = hired;
+
+            document.getElementById("rejectedCount").textContent = rejected;
+
+        }
+
+        // =====================================
+        // CREATE DETAIL ITEM
+        // =====================================
+
+        function createDetail(label, value, fullWidth = false) {
+
+            const item = document.createElement("div");
+
+            item.className = fullWidth
+                ? "detail-item full-width"
+                : "detail-item";
+
+            const title = document.createElement("label");
+            title.textContent = label;
+
+            const content = document.createElement("p");
+            content.textContent = value || "Not provided";
+
+            item.appendChild(title);
+            item.appendChild(content);
+
+            return item;
+
+        }
+
+        // =====================================
+        // RENDER APPLICATIONS
+        // =====================================
+
+        function renderApplications() {
+
+            updateStatistics();
+
+            const applicantList =
+                document.getElementById("applicantList");
+
+            const searchValue =
+                document.getElementById("searchInput")
+                .value.toLowerCase().trim();
+
+            const filterValue =
+                document.getElementById("filterStatus").value;
+
+            applicantList.innerHTML = "";
+
+            const filteredApplications = applications.filter(app => {
+
+                const name = (app.studentName || "").toLowerCase();
+
+                const studentId = (app.studentId || "").toLowerCase();
+
+                const jobTitle = (app.jobTitle || "").toLowerCase();
+
+                const status = app.status || "Pending";
+
+                const matchesSearch =
+                    name.includes(searchValue) ||
+                    studentId.includes(searchValue) ||
+                    jobTitle.includes(searchValue);
+
+                const matchesStatus =
+                    filterValue === "All" ||
+                    status === filterValue;
+
+                return matchesSearch && matchesStatus;
+
+            });
+
+            // EMPTY STATE
+
+            if (filteredApplications.length === 0) {
+
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+
+                const heading = document.createElement("h3");
+                heading.textContent = applications.length === 0
+                    ? "No Applications Yet"
+                    : "No Matching Applications";
+
+                const description = document.createElement("p");
+                description.textContent = applications.length === 0
+                    ? "Student applications will appear here after they submit the Job Application Form."
+                    : "Try changing your search or status filter.";
+
+                empty.appendChild(heading);
+                empty.appendChild(description);
+
+                applicantList.appendChild(empty);
+
+                return;
+
+            }
+
+            // SHOW APPLICATION CARDS
+
+            filteredApplications.forEach(app => {
+
+                const card = document.createElement("div");
+                card.className = "applicant-card";
+
+                // TOP SECTION
+
+                const top = document.createElement("div");
+                top.className = "applicant-top";
+
+                const applicantHeading = document.createElement("div");
+
+                const name = document.createElement("div");
+                name.className = "applicant-name";
+                name.textContent = app.studentName || "Unknown Student";
+
+                const job = document.createElement("div");
+                job.className = "applicant-job";
+                job.textContent = app.jobTitle || "Unknown Job";
+
+                applicantHeading.appendChild(name);
+                applicantHeading.appendChild(job);
+
+                const statusBadge = document.createElement("span");
+
+                const currentStatus = app.status || "Pending";
+
+                statusBadge.className =
+                    "status status-" + currentStatus.toLowerCase();
+
+                statusBadge.textContent = currentStatus;
+
+                top.appendChild(applicantHeading);
+                top.appendChild(statusBadge);
+
+                card.appendChild(top);
+
+                // STUDENT DETAILS
+
+                const details = document.createElement("div");
+                details.className = "applicant-details";
+
+                details.appendChild(
+                    createDetail("Student ID", app.studentId)
+                );
+
+                details.appendChild(
+                    createDetail("Email", app.email)
+                );
+
+                details.appendChild(
+                    createDetail("Contact Number", app.phone)
+                );
+
+                details.appendChild(
+                    createDetail("Application ID", app.applicationId)
+                );
+
+                details.appendChild(
+                    createDetail("Relevant Skills", app.skills, true)
+                );
+
+                details.appendChild(
+                    createDetail("Previous Experience", app.experience, true)
+                );
+
+                const availability = Array.isArray(app.availability)
+                    ? app.availability.join(", ")
+                    : app.availability;
+
+                details.appendChild(
+                    createDetail("Availability", availability, true)
+                );
+
+                details.appendChild(
+                    createDetail("Application Message", app.message, true)
+                );
+
+                card.appendChild(details);
+
+                // STATUS CONTROL
+
+                const statusSection = document.createElement("div");
+                statusSection.className = "status-section";
+
+                const date = document.createElement("span");
+                date.className = "date-text";
+
+                date.textContent =
+                    "Applied on: " + formatDate(app.appliedDate);
+
+                const control = document.createElement("div");
+                control.className = "status-control";
+
+                const statusLabel = document.createElement("label");
+                statusLabel.textContent = "Update Status:";
+
+                const select = document.createElement("select");
+
+                ["Pending", "Hired", "Rejected"].forEach(status => {
+
+                    const option = document.createElement("option");
+
+                    option.value = status;
+                    option.textContent = status;
+
+                    if (status === currentStatus) {
+                        option.selected = true;
+                    }
+
+                    select.appendChild(option);
+
+                });
+
+                const updateButton = document.createElement("button");
+
+                updateButton.type = "button";
+                updateButton.className = "update-btn";
+                updateButton.textContent = "Update Status";
+
+                updateButton.addEventListener("click", function() {
+
+                    updateApplicationStatus(
+                        app.applicationId,
+                        select.value
+                    );
+
+                });
+
+                control.appendChild(statusLabel);
+                control.appendChild(select);
+                control.appendChild(updateButton);
+
+                statusSection.appendChild(date);
+                statusSection.appendChild(control);
+
+                card.appendChild(statusSection);
+
+                applicantList.appendChild(card);
+
+            });
+
+        }
+
+        // =====================================
+        // UPDATE APPLICATION STATUS
+        // =====================================
+
+        function updateApplicationStatus(applicationId, newStatus) {
+
+            const index = applications.findIndex(app =>
+                String(app.applicationId) === String(applicationId)
+            );
+
+            if (index === -1) {
+
+                showNotice(
+                    "Application not found.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            const allowedStatuses = [
+                "Pending",
+                "Hired",
+                "Rejected"
+            ];
+
+            if (!allowedStatuses.includes(newStatus)) {
+                showNotice("Invalid application status.", "error");
+                return;
+            }
+
+            // UPDATE STATUS
+
+            applications[index].status = newStatus;
+
+            applications[index].updatedAt =
+                new Date().toISOString();
+
+            // SAVE TO LOCAL STORAGE
+
+            saveApplications();
+
+            // REFRESH DISPLAY
+
+            renderApplications();
+
+            showNotice(
+                "Application status successfully updated to " +
+                newStatus + ".",
+                "success"
+            );
+
+        }
+
+        // =====================================
+        // SHOW NOTICE
+        // =====================================
+
+        function showNotice(message, type) {
+
+            const notice = document.getElementById("notice");
+
+            notice.textContent = message;
+
+            notice.className = "notice " + type;
+
+        }
+
+        // =====================================
+        // SEARCH AND FILTER
+        // =====================================
+
+        document.getElementById("searchInput")
+            .addEventListener("input", renderApplications);
+
+        document.getElementById("filterStatus")
+            .addEventListener("change", renderApplications);
+
+        // =====================================
+        // INITIALIZE PAGE
+        // =====================================
+
+        loadApplications();
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,863 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Siswa-Gigs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f6f3fc;
+    color: #30234b;
+}
+
+header {
+    background: linear-gradient(135deg, #39216d, #7147c7);
+    color: white;
+    padding: 25px 6%;
+}
+
+header h1 {
+    font-size: 25px;
+}
+
+header p {
+    margin-top: 7px;
+    color: #e9ddff;
+}
+
+nav {
+    background: white;
+    padding: 16px 6%;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+nav a {
+    color: #5936a8;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 22px;
+    font-size: 14px;
+}
+
+.container {
+    width: 88%;
+    max-width: 1250px;
+    margin: 35px auto;
+}
+
+.heading {
+    margin-bottom: 25px;
+}
+
+.heading h2 {
+    font-size: 27px;
+}
+
+.heading p {
+    color: #777;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #e7e0f2;
+    border-left: 5px solid #7147c7;
+}
+
+.summary-card h3 {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 12px;
+}
+
+.summary-card p {
+    font-size: 25px;
+    font-weight: bold;
+    color: #5936a8;
+}
+
+.section {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #e7e0f2;
+    margin-bottom: 24px;
+}
+
+.section h2 {
+    font-size: 19px;
+    margin-bottom: 17px;
+}
+
+.section-description {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: -8px;
+    margin-bottom: 17px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th {
+    background: #f2edfb;
+    color: #5936a8;
+    text-align: left;
+    padding: 13px;
+    font-size: 12px;
+}
+
+td {
+    padding: 14px 13px;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.active {
+    background: #dcf5e4;
+    color: #16833b;
+}
+
+.expired {
+    background: #ffe0e0;
+    color: #c0392b;
+}
+
+.success {
+    background: #e6f5e9;
+    color: #278342;
+}
+
+.pending {
+    background: #fff3d3;
+    color: #956b13;
+}
+
+.processing {
+    background: #eee7fb;
+    color: #5936a8;
+}
+
+.delete-btn {
+    background: #ffe0e0;
+    color: #c0392b;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.view-btn {
+    background: #eee7fb;
+    color: #5936a8;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.refresh-btn {
+    background: #5936a8;
+    color: white;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.payment-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.payment-heading h2 {
+    margin-bottom: 0;
+}
+
+.payment-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+    margin-bottom: 20px;
+}
+
+.payment-summary-card {
+    background: #f7f3ff;
+    border-radius: 9px;
+    padding: 16px;
+}
+
+.payment-summary-card p {
+    color: #777;
+    font-size: 11px;
+    margin-bottom: 9px;
+}
+
+.payment-summary-card strong {
+    color: #5936a8;
+    font-size: 19px;
+}
+
+.payment-table {
+    min-width: 950px;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 25px;
+    color: #888;
+    font-size: 13px;
+}
+
+.fee-note {
+    color: #888;
+    font-size: 11px;
+    line-height: 1.6;
+    margin-top: 13px;
+}
+
+.activity {
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+.activity:last-child {
+    border-bottom: none;
+}
+
+.activity small {
+    display: block;
+    color: #999;
+    margin-top: 6px;
+}
+
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.quick-link {
+    display: block;
+    background: #f5f1fc;
+    color: #5936a8;
+    text-decoration: none;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.quick-link:hover {
+    background: #eee6ff;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #888;
+    font-size: 12px;
+}
+
+@media(max-width:850px) {
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .payment-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+
+@media(max-width:550px) {
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 17px;
+    }
+
+    .payment-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Siswa-Gigs</h1>
+    <p>Admin Dashboard | Campus Part-Time Job Portal</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="admin-dashboard.html">Dashboard</a>
+    <a href="login.html">Logout</a>
+</nav>
+
+<div class="container">
+
+    <div class="heading">
+        <h2>Welcome, Administrator!</h2>
+        <p>Monitor users, job listings, payment transactions and platform activities.</p>
+    </div>
+
+    <!-- DASHBOARD SUMMARY -->
+
+    <div class="summary">
+
+        <div class="summary-card">
+            <h3>Total Users</h3>
+            <p>120</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Total Jobs</h3>
+            <p id="totalJobs">5</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Active Jobs</h3>
+            <p id="activeJobs">2</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Expired Jobs</h3>
+            <p id="expiredJobs">3</p>
+        </div>
+
+    </div>
+
+    <!-- TRANSACTION MONITORING -->
+
+    <div class="section">
+
+        <div class="payment-heading">
+            <h2>Transaction Monitoring</h2>
+
+            <button class="refresh-btn" onclick="loadTransactions()">
+                Refresh Transactions
+            </button>
+        </div>
+
+        <p class="section-description">
+            Monitor employer payments, student wage allocations and
+            Siswa-Gigs platform service fees.
+        </p>
+
+        <!-- FINANCIAL SUMMARY -->
+
+        <div class="payment-summary">
+
+            <div class="payment-summary-card">
+                <p>Successful Transactions</p>
+                <strong id="totalTransactions">0</strong>
+            </div>
+
+            <div class="payment-summary-card">
+                <p>Pending Payments</p>
+                <strong id="pendingPayments">0</strong>
+            </div>
+
+            <div class="payment-summary-card">
+                <p>Total Gross Wages</p>
+                <strong id="totalGross">RM0.00</strong>
+            </div>
+
+            <div class="payment-summary-card">
+                <p>Total Platform Revenue (2%)</p>
+                <strong id="totalRevenue">RM0.00</strong>
+            </div>
+
+            <div class="payment-summary-card">
+                <p>Total Student Net Payouts</p>
+                <strong id="totalPayout">RM0.00</strong>
+            </div>
+
+            <div class="payment-summary-card">
+                <p>Total Employer Payments</p>
+                <strong id="totalEmployerPayments">RM0.00</strong>
+            </div>
+
+        </div>
+
+        <!-- TRANSACTION TABLE -->
+
+        <h2 style="font-size:16px;margin-bottom:14px;">
+            Transaction Records
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table class="payment-table">
+
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Student</th>
+                        <th>Job</th>
+                        <th>Hours</th>
+                        <th>Gross Wages</th>
+                        <th>2% Fee</th>
+                        <th>Student Payout</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactionTable">
+
+                </tbody>
+
+            </table>
+
+            <div class="empty-message" id="emptyTransactions">
+                No payment transactions have been recorded yet.
+            </div>
+
+        </div>
+
+        <p class="fee-note">
+            Platform revenue is calculated from successful transactions only.
+            Pending payments are not included in the revenue total.
+            Student payout represents the remaining 98% allocated to students.
+        </p>
+
+    </div>
+
+    <!-- USER MANAGEMENT -->
+
+    <div class="section">
+
+        <h2>User Management</h2>
+
+        <div class="table-wrapper">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Registration Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Nur Aisyah</td>
+                        <td>aisyah@student.uitm.edu.my</td>
+                        <td>Student</td>
+                        <td>20 Oct 2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>Muhammad Danish</td>
+                        <td>danish@student.uitm.edu.my</td>
+                        <td>Student</td>
+                        <td>21 Oct 2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>Campus Cafe</td>
+                        <td>campuscafe@email.com</td>
+                        <td>Employer</td>
+                        <td>22 Oct 2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>University Events</td>
+                        <td>events@email.com</td>
+                        <td>Employer</td>
+                        <td>23 Oct 2026</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- JOB MANAGEMENT -->
+
+    <div class="section">
+
+        <h2>Job Management</h2>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Closing Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="jobTable">
+
+                    <tr data-status="Expired">
+                        <td>Campus Booth Crew</td>
+                        <td>University Events</td>
+                        <td>30 Oct 2026</td>
+                        <td><span class="status expired">Expired</span></td>
+                        <td><button class="delete-btn" onclick="deleteJob(this)">Delete</button></td>
+                    </tr>
+
+                    <tr data-status="Expired">
+                        <td>Event Assistant</td>
+                        <td>Campus Activities</td>
+                        <td>28 Oct 2026</td>
+                        <td><span class="status expired">Expired</span></td>
+                        <td><button class="delete-btn" onclick="deleteJob(this)">Delete</button></td>
+                    </tr>
+
+                    <tr data-status="Expired">
+                        <td>Document Sorting Assistant</td>
+                        <td>Admin Office</td>
+                        <td>25 Oct 2026</td>
+                        <td><span class="status expired">Expired</span></td>
+                        <td><button class="delete-btn" onclick="deleteJob(this)">Delete</button></td>
+                    </tr>
+
+                    <tr data-status="Active">
+                        <td>F&amp;B Service Crew</td>
+                        <td>Campus Cafe</td>
+                        <td>15 Nov 2026</td>
+                        <td><span class="status active">Active</span></td>
+                        <td><button class="view-btn" onclick="viewJob(this)">View</button></td>
+                    </tr>
+
+                    <tr data-status="Active">
+                        <td>Library Assistant</td>
+                        <td>University Library</td>
+                        <td>20 Nov 2026</td>
+                        <td><span class="status active">Active</span></td>
+                        <td><button class="view-btn" onclick="viewJob(this)">View</button></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="empty-message" id="emptyJobs">
+            No job listings available.
+        </div>
+
+    </div>
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="section">
+
+        <h2>Quick Actions</h2>
+
+        <div class="quick-links">
+            <a href="create-job.html" class="quick-link">+ Create Job</a>
+            <a href="manage-jobs.html" class="quick-link">Manage Jobs</a>
+            <a href="view-applicants.html" class="quick-link">View Applicants</a>
+            <a href="my-calendar.html" class="quick-link">View Work Calendar</a>
+        </div>
+
+    </div>
+
+    <!-- RECENT ACTIVITIES -->
+
+    <div class="section">
+
+        <h2>Recent Activities</h2>
+
+        <div class="activity">
+            <strong>New student registered</strong>
+            <small>Nur Aisyah joined Siswa-Gigs.</small>
+        </div>
+
+        <div class="activity">
+            <strong>New job listing created</strong>
+            <small>Campus Cafe posted F&amp;B Service Crew.</small>
+        </div>
+
+        <div class="activity">
+            <strong>Job application received</strong>
+            <small>A student applied for Event Crew Assistant.</small>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Siswa-Gigs | Campus Part-Time Job Portal
+</footer>
+
+<script>
+
+// SAME STORAGE KEY USED BY EMPLOYER AND PAYMENT PAGES
+
+const STORAGE_KEY = "siswaGigsPayments";
+
+function getPaymentRecords() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function money(value) {
+    return "RM" + Number(value).toFixed(2);
+}
+
+
+// LOAD AND DISPLAY TRANSACTIONS
+
+function loadTransactions() {
+
+    const records = getPaymentRecords();
+
+    const table = document.getElementById("transactionTable");
+    const emptyMessage = document.getElementById("emptyTransactions");
+
+    table.innerHTML = "";
+
+    let successfulCount = 0;
+    let pendingCount = 0;
+
+    let totalGross = 0;
+    let totalFee = 0;
+    let totalPayout = 0;
+    let totalEmployerPayment = 0;
+
+    const recordList = Object.values(records);
+
+    recordList.forEach(function(record) {
+
+        const isSuccessful = record.status === "Payment Successful";
+        const isPending = record.status === "Ready for Payment";
+
+        if (isSuccessful) {
+            successfulCount++;
+
+            totalGross += Number(record.gross) || 0;
+            totalFee += Number(record.fee) || 0;
+            totalPayout += Number(record.net) || 0;
+            totalEmployerPayment += Number(record.gross) || 0;
+        }
+
+        if (isPending) {
+            pendingCount++;
+        }
+
+        let statusHTML = "";
+
+        if (isSuccessful) {
+            statusHTML = '<span class="status success">Payment Successful</span>';
+        } else if (isPending) {
+            statusHTML = '<span class="status pending">Ready for Payment</span>';
+        } else {
+            statusHTML = '<span class="status processing">Unknown Status</span>';
+        }
+
+        const transactionId =
+            record.transactionReference || "Not Generated";
+
+        const paymentMethod =
+            record.paymentMethod || "Not Paid";
+
+        const row = document.createElement("tr");
+
+        const values = [
+            transactionId,
+            record.studentName || "-",
+            record.job || "-",
+            (record.hours || 0) + " hours",
+            money(record.gross || 0),
+            money(record.fee || 0),
+            money(record.net || 0),
+            paymentMethod
+        ];
+
+        values.forEach(function(value) {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        const statusCell = document.createElement("td");
+        statusCell.innerHTML = statusHTML;
+        row.appendChild(statusCell);
+
+        table.appendChild(row);
+    });
+
+
+    // EMPTY TABLE MESSAGE
+
+    if (recordList.length === 0) {
+        emptyMessage.style.display = "block";
+    } else {
+        emptyMessage.style.display = "none";
+    }
+
+
+    // UPDATE FINANCIAL SUMMARY
+
+    document.getElementById("totalTransactions").textContent =
+        successfulCount;
+
+    document.getElementById("pendingPayments").textContent =
+        pendingCount;
+
+    document.getElementById("totalGross").textContent =
+        money(totalGross);
+
+    document.getElementById("totalRevenue").textContent =
+        money(totalFee);
+
+    document.getElementById("totalPayout").textContent =
+        money(totalPayout);
+
+    document.getElementById("totalEmployerPayments").textContent =
+        money(totalEmployerPayment);
+
+}
+
+
+// JOB MANAGEMENT
+
+function updateJobSummary() {
+
+    const rows = document.querySelectorAll("#jobTable tr");
+
+    let active = 0;
+    let expired = 0;
+
+    rows.forEach(function(row) {
+
+        if (row.dataset.status === "Active") {
+            active++;
+        }
+
+        if (row.dataset.status === "Expired") {
+            expired++;
+        }
+
+    });
+
+    document.getElementById("activeJobs").textContent = active;
+    document.getElementById("expiredJobs").textContent = expired;
+    document.getElementById("totalJobs").textContent = rows.length;
+
+    document.getElementById("emptyJobs").style.display =
+        rows.length === 0 ? "block" : "none";
+}
+
+
+function deleteJob(button) {
+
+    const row = button.closest("tr");
+    const jobTitle = row.cells[0].textContent;
+
+    if (row.dataset.status !== "Expired") {
+        alert("Only expired jobs can be deleted.");
+        return;
+    }
+
+    if (confirm("Are you sure you want to delete " + jobTitle + "?")) {
+
+        row.remove();
+
+        updateJobSummary();
+
+        alert("Expired job deleted successfully.");
+    }
+}
+
+
+function viewJob(button) {
+
+    const row = button.closest("tr");
+
+    alert(
+        "Job Details\n\n" +
+        "Job Title: " + row.cells[0].textContent + "\n" +
+        "Employer: " + row.cells[1].textContent + "\n" +
+        "Status: Active"
+    );
+}
+
+
+// INITIALISE DASHBOARD
+
+window.addEventListener("DOMContentLoaded", function() {
+    loadTransactions();
+    updateJobSummary();
+});
+
+</script>
+
+</body>
+</html>

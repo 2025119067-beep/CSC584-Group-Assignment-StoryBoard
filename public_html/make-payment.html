@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make Payment | Siswa-Gigs</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f3fa;color:#30264a}
+header{background:#39216d;color:white;padding:20px 7%}
+.logo{font-size:23px;font-weight:bold}.logo span{color:#f5cd55}
+.container{width:90%;max-width:850px;margin:40px auto}
+.back{display:inline-block;color:#5936a8;text-decoration:none;font-size:13px;margin-bottom:20px}
+h1{font-size:27px;margin-bottom:8px}.subtitle{color:#777;font-size:13px;margin-bottom:25px}
+.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:22px}
+.card{background:white;padding:24px;border-radius:12px;box-shadow:0 3px 12px #00000008;margin-bottom:20px}
+.card h2{font-size:17px;margin-bottom:18px}
+.student{background:#f5f1fc;padding:16px;border-radius:9px;margin-bottom:18px}
+.student h3{color:#5936a8;font-size:16px;margin-bottom:6px}
+.student p{color:#777;font-size:12px;margin-top:5px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eee;font-size:13px}
+.row span{color:#777}.row strong{text-align:right}
+.total{background:#f5f1fc;padding:17px;border-radius:9px;margin-top:18px}
+.total p{color:#777;font-size:12px;margin-bottom:8px}
+.total h2{color:#5936a8;font-size:27px;margin:0}
+.method{display:flex;align-items:center;gap:12px;border:1px solid #ddd5ed;border-radius:9px;padding:15px;margin-bottom:12px;cursor:pointer}
+.method:has(input:checked){border:2px solid #5936a8;background:#f8f5ff}
+.method input{accent-color:#5936a8;width:17px;height:17px}
+.method strong{font-size:13px}.method p{color:#777;font-size:11px;margin-top:5px}
+.note{background:#fff8e5;border-left:4px solid #f5cd55;padding:13px;border-radius:6px;color:#715719;font-size:12px;line-height:1.6;margin-top:15px}
+button{width:100%;background:#5936a8;color:white;padding:14px;border:0;border-radius:7px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:18px}
+button:hover{background:#39216d}
+.small{color:#888;font-size:11px;text-align:center;line-height:1.6;margin-top:12px}
+.error{background:white;padding:25px;border-radius:12px;color:#c43d3d}
+footer{text-align:center;padding:25px;color:#888;font-size:12px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.container{width:94%}}
+</style>
+</head>
+<body>
+<header><div class="logo">Siswa<span>-Gigs</span></div></header>
+
+<div class="container">
+<a href="employer-dashboard.html" class="back">← Back to Employer Dashboard</a>
+<h1>Complete Your Payment</h1>
+<p class="subtitle">Review the payment details before proceeding.</p>
+
+<div id="paymentContent" class="layout" style="display:none">
+    <div class="card">
+        <h2>Student Information</h2>
+        <div class="student">
+            <h3 id="studentName"></h3>
+            <p id="jobName"></p>
+            <p>Siswa-Gigs Student Wage Payment</p>
+        </div>
+        <div class="row"><span>Total Working Hours</span><strong id="hours"></strong></div>
+        <div class="row"><span>Hourly Rate</span><strong id="rate"></strong></div>
+        <div class="row"><span>Gross Wages</span><strong id="gross"></strong></div>
+        <div class="row"><span>Platform Service Fee (2%)</span><strong id="fee"></strong></div>
+        <div class="row"><span>Student Net Payout</span><strong id="net"></strong></div>
+        <div class="total"><p>Total Amount to Pay</p><h2 id="employerPays"></h2></div>
+    </div>
+
+    <div class="card">
+        <h2>Select Payment Method</h2>
+        <label class="method">
+            <input type="radio" name="method" value="Credit/Debit Card" checked>
+            <div><strong>Credit / Debit Card</strong><p>Simulated card payment</p></div>
+        </label>
+        <label class="method">
+            <input type="radio" name="method" value="FPX">
+            <div><strong>FPX Payment</strong><p>Simulated FPX payment</p></div>
+        </label>
+        <div class="note">
+            <strong>Payment Information</strong><br>
+            Employer pays the gross wages through Siswa-Gigs.
+            The system deducts a 2% platform service fee.
+            The remaining 98% is allocated to the student.
+        </div>
+        <button id="confirmButton" onclick="confirmPayment()">Confirm Payment</button>
+        <p class="small">Demonstration only. No real banking transaction will be performed.</p>
+    </div>
+</div>
+
+<div id="errorBox" class="error" style="display:none">
+    <h2>Payment Information Not Found</h2>
+    <p style="margin:12px 0">Please return to Employer Dashboard and generate a valid payment first.</p>
+    <a href="employer-dashboard.html">Back to Dashboard</a>
+</div>
+</div>
+
+<footer>© 2026 Siswa-Gigs | Campus Part-Time Job Portal</footer>
+
+<script>
+const KEY = "siswaGigsPayments";
+const params = new URLSearchParams(window.location.search);
+const id = params.get("student");
+
+function getRecords() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch(e) { return {}; }
+}
+function money(n) { return "RM" + Number(n).toFixed(2); }
+
+const records = getRecords();
+const record = records[id];
+
+const valid = record &&
+    record.status === "Ready for Payment" &&
+    record.hours > 0 &&
+    record.gross > 0 &&
+    Math.abs(record.gross - record.hours * record.rate) < 0.001 &&
+    Math.abs(record.fee - record.gross * 0.02) < 0.001 &&
+    Math.abs(record.net - (record.gross - record.fee)) < 0.001;
+
+if (valid) {
+    document.getElementById("paymentContent").style.display = "grid";
+    document.getElementById("studentName").textContent = record.studentName;
+    document.getElementById("jobName").textContent = "Job: " + record.job;
+    document.getElementById("hours").textContent = record.hours + " hours";
+    document.getElementById("rate").textContent = money(record.rate);
+    document.getElementById("gross").textContent = money(record.gross);
+    document.getElementById("fee").textContent = "-" + money(record.fee);
+    document.getElementById("net").textContent = money(record.net);
+    document.getElementById("employerPays").textContent = money(record.gross);
+} else {
+    document.getElementById("errorBox").style.display = "block";
+}
+
+function confirmPayment() {
+    const selected = document.querySelector('input[name="method"]:checked');
+    if (!valid || !selected) {
+        alert("Invalid payment information. Please try again.");
+        return;
+    }
+
+    if (!confirm("Confirm payment of " + money(record.gross) +
+        " for " + record.studentName + "?")) return;
+
+    const latest = getRecords();
+    if (!latest[id] || latest[id].status !== "Ready for Payment") {
+        alert("This payment has already been processed or is unavailable.");
+        return;
+    }
+
+    latest[id].status = "Payment Successful";
+    latest[id].payoutStatus = "Processing";
+    latest[id].paymentMethod = selected.value;
+    latest[id].transactionReference = "SG-" + Date.now();
+    latest[id].paymentDate = new Date().toISOString();
+
+    localStorage.setItem(KEY, JSON.stringify(latest));
+
+    window.location.href = "payment-success.html?student=" +
+        encodeURIComponent(id);
+}
+</script>
+</body>
+</html>

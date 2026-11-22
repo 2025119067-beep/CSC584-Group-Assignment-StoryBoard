@@ -1,0 +1,960 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | Siswa-Gigs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f7f3ff;
+    color: #30234a;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 235px;
+    min-height: 100vh;
+    background: #39216d;
+    color: white;
+    position: fixed;
+    padding: 30px 20px;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 45px;
+}
+
+.sidebar h4 {
+    color: #cbb9f1;
+    font-size: 11px;
+    margin: 25px 10px 12px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 13px 12px;
+    margin-bottom: 7px;
+    color: #eee7ff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background: #7147c7;
+    color: white;
+}
+
+/* MAIN */
+.main {
+    margin-left: 235px;
+    padding: 30px 40px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.topbar h2 {
+    color: #39216d;
+    font-size: 23px;
+}
+
+.profile {
+    background: white;
+    padding: 10px 16px;
+    border-radius: 25px;
+    color: #5936a8;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* WELCOME */
+.welcome {
+    background: linear-gradient(120deg, #39216d, #8058ce);
+    color: white;
+    padding: 32px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    color: #eee7ff;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+.view-btn {
+    display: inline-block;
+    margin-top: 17px;
+    padding: 11px 18px;
+    background: #f5cd55;
+    color: #39216d;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* SECTION */
+.section-title {
+    color: #39216d;
+    font-size: 19px;
+    margin-bottom: 17px;
+}
+
+/* EARNINGS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: white;
+    padding: 21px;
+    border-radius: 13px;
+    border: 1px solid #eee7fa;
+    box-shadow: 0 3px 10px #eee7fa;
+}
+
+.stat-card p {
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.stat-card h2 {
+    color: #5936a8;
+    font-size: 22px;
+}
+
+.stat-card small {
+    display: block;
+    margin-top: 8px;
+    color: #888;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* MY EARNINGS & PAYMENTS */
+.payment-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #eee7fa;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px #eee7fa;
+}
+
+.payment-subtitle {
+    color: #888;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: -7px;
+    margin-bottom: 20px;
+}
+
+.payment-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.payment-summary-card {
+    background: #f7f3ff;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+.payment-summary-card p {
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.payment-summary-card h3 {
+    color: #5936a8;
+    font-size: 21px;
+}
+
+.payment-summary-card.fee h3 {
+    color: #d64f5b;
+}
+
+.payment-summary-card.net h3 {
+    color: #21834b;
+}
+
+.payment-history-title {
+    color: #39216d;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.payment-record {
+    border: 1px solid #eee7fa;
+    border-radius: 11px;
+    padding: 17px;
+    margin-top: 12px;
+}
+
+.payment-record-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.payment-record-top strong {
+    color: #39216d;
+}
+
+.employer-paid-badge {
+    display: inline-block;
+    background: #e6f5e9;
+    color: #278342;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.payment-record-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 18px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.payment-record-details strong {
+    color: #49336f;
+}
+
+.student-payout-status {
+    margin-top: 12px;
+    color: #9a6a18;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.invoice-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 16px;
+    background: #7147c7;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.invoice-btn:hover {
+    background: #5936a8;
+}
+
+.no-payment {
+    background: #f8f6fc;
+    border: 1px dashed #d9cbed;
+    padding: 20px;
+    border-radius: 10px;
+    color: #777;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* WORK JOURNEY */
+.journey {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #eee7fa;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px #eee7fa;
+}
+
+.journey-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.journey-header h3 {
+    color: #39216d;
+    font-size: 20px;
+}
+
+.journey-content {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.mascot {
+    width: 145px;
+    min-width: 145px;
+    height: 160px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #eee2ff, #d8c3fa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+}
+
+.journey-details {
+    flex: 1;
+}
+
+.level-badge {
+    display: inline-block;
+    background: #ffe7a0;
+    color: #765000;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.journey-details h2 {
+    color: #5936a8;
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.journey-details p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.progress-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 9px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #5936a8;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 11px;
+    background: #e9e2f4;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 62.5%;
+    height: 100%;
+    background: linear-gradient(90deg, #7147c7, #a47be7);
+    border-radius: 20px;
+}
+
+.next-level {
+    margin-top: 13px;
+    padding: 12px;
+    background: #f5efff;
+    border-radius: 8px;
+    color: #5936a8;
+    font-size: 12px;
+}
+
+/* LOWER CONTENT */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: white;
+    padding: 23px;
+    border-radius: 13px;
+    border: 1px solid #eee7fa;
+    box-shadow: 0 3px 10px #eee7fa;
+}
+
+.job {
+    padding: 16px 0;
+    border-bottom: 1px solid #eeeaf5;
+}
+
+.job:last-child {
+    border-bottom: none;
+}
+
+.job h4 {
+    color: #39216d;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.job p {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.rate {
+    color: #5936a8;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 15px;
+}
+
+.skill {
+    background: #eee7fa;
+    color: #5936a8;
+    padding: 9px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.period {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #eeeaf5;
+}
+
+.period h4 {
+    color: #39216d;
+    margin-bottom: 7px;
+}
+
+.period p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    padding: 30px 0 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 22px;
+    }
+
+    .journey-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mascot {
+        width: 100%;
+    }
+
+    .payment-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-record-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 450px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">SISWA-GIGS</div>
+
+    <h4>MAIN MENU</h4>
+
+    <a href="student-dashboard.html" class="active">Dashboard</a>
+    <a href="browse-jobs.html">Find Micro-Jobs</a>
+    <a href="my-applications.html">My Applications</a>
+
+    <h4>MY ACTIVITIES</h4>
+
+    <a href="my-calendar.html">My Calendar</a>
+
+    <h4>ACCOUNT</h4>
+
+    <a href="student-profile.html">My Profile</a>
+    <a href="login.html">Logout</a>
+
+</aside>
+
+<main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>Student Dashboard</h2>
+        <div class="profile">Student: Aina</div>
+    </div>
+
+    <!-- WELCOME -->
+    <section class="welcome">
+
+        <h1>Welcome Back, Aina!</h1>
+
+        <p>
+            Ready to explore new opportunities?
+            Find flexible campus micro-jobs, build your skills
+            and earn extra income while studying.
+        </p>
+
+        <a href="browse-jobs.html" class="view-btn">
+            Explore Jobs
+        </a>
+
+    </section>
+
+    <!-- EARNINGS AND INSIGHTS -->
+    <h3 class="section-title">Your Earnings & Insights</h3>
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <p>Total Gross Earnings</p>
+            <h2>RM 450.00</h2>
+            <small>Before applicable statutory deductions.</small>
+        </div>
+
+        <div class="stat-card">
+            <p>Completed Jobs</p>
+            <h2>5</h2>
+            <small>Successfully completed micro-jobs.</small>
+        </div>
+
+        <div class="stat-card">
+            <p>Peak Hiring Period</p>
+            <h2>October</h2>
+            <small>High demand for campus jobs.</small>
+        </div>
+
+        <div class="stat-card">
+            <p>Most Demanded Skill</p>
+            <h2>Communication</h2>
+            <small>Popular requirement by employers.</small>
+        </div>
+
+    </section>
+
+    <!-- MY EARNINGS & PAYMENTS -->
+    <section class="payment-section">
+
+        <h3 class="section-title">My Earnings & Payments</h3>
+
+        <p class="payment-subtitle">
+            View your payment records, 2% platform service fee
+            and net earnings.
+        </p>
+
+        <div id="studentPaymentContent">
+            <div class="no-payment">
+                Loading payment records...
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MY WORK JOURNEY -->
+    <section class="journey">
+
+        <div class="journey-header">
+            <span style="font-size:25px;">🏆</span>
+            <h3>My Work Journey</h3>
+        </div>
+
+        <div class="journey-content">
+
+            <div class="mascot" aria-label="Student mascot">
+                🎓
+            </div>
+
+            <div class="journey-details">
+
+                <span class="level-badge">LEVEL 2</span>
+
+                <h2>Active Student</h2>
+
+                <p>
+                    Congratulations! You have completed
+                    5 micro-jobs. Keep going and continue
+                    building your work experience.
+                </p>
+
+                <div class="progress-heading">
+                    <span>Progress to Level 3: Rising Talent</span>
+                    <span>5 / 8 jobs</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+                <div class="next-level">
+                    ⭐ 3 more completed jobs to unlock Level 3!
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RECOMMENDED JOBS AND SKILLS -->
+    <section class="content-grid">
+
+        <!-- RECOMMENDED JOBS -->
+        <div class="panel">
+
+            <h3 class="section-title">Recommended Micro-Jobs</h3>
+
+            <div class="job">
+                <h4>Campus Event Assistant</h4>
+                <p>Student Affairs Department · 1 Day</p>
+                <span class="rate">RM 12 / hour</span>
+            </div>
+
+            <div class="job">
+                <h4>Library Data Entry Assistant</h4>
+                <p>University Library · 3 Days</p>
+                <span class="rate">RM 10 / hour</span>
+            </div>
+
+            <div class="job">
+                <h4>Campus Booth Crew</h4>
+                <p>University Vendor · Weekend</p>
+                <span class="rate">RM 11 / hour</span>
+            </div>
+
+            <a href="browse-jobs.html" class="view-btn">
+                Explore All Jobs
+            </a>
+
+        </div>
+
+        <!-- SKILLS -->
+        <div class="panel">
+
+            <h3 class="section-title">Skills in Demand</h3>
+
+            <p style="color:#888; font-size:13px;">
+                Popular skills requested by employers.
+            </p>
+
+            <div class="skills">
+
+                <span class="skill">Communication</span>
+                <span class="skill">Teamwork</span>
+                <span class="skill">Customer Service</span>
+                <span class="skill">Data Entry</span>
+                <span class="skill">Event Management</span>
+                <span class="skill">Microsoft Office</span>
+
+            </div>
+
+            <div class="period">
+
+                <h4>Hiring Insights</h4>
+
+                <p>
+                    October is shown as an example of a peak
+                    hiring period. These insights help students
+                    understand job demand on campus.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 Siswa-Gigs | Your Campus. Your Opportunities. Your Future.
+    </footer>
+
+</main>
+
+<script>
+/*
+ * PAYMENT CONNECTION
+ * Uses the same object structure as make-payment.html
+ * and payment-success.html.
+ *
+ * Storage format:
+ * localStorage["siswaGigsPayments"]["aisyah"]
+ *
+ * Demo student ID: aisyah
+ * Change to danish only when testing Danish's record.
+ */
+
+const PAYMENT_STORAGE_KEY = "siswaGigsPayments";
+const CURRENT_STUDENT_ID = "aisyah";
+
+function formatRM(amount) {
+    return "RM " + Number(amount || 0).toFixed(2);
+}
+
+function escapePaymentText(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+function loadStudentPayments() {
+
+    const container = document.getElementById("studentPaymentContent");
+
+    let records = {};
+
+    try {
+        records = JSON.parse(
+            localStorage.getItem(PAYMENT_STORAGE_KEY) || "{}"
+        );
+    } catch (error) {
+        console.error("Could not read payment records:", error);
+        records = {};
+    }
+
+    let studentPayments = [];
+
+    /*
+     * Current payment pages use OBJECT format:
+     * records["aisyah"]
+     *
+     * This also supports ARRAY format for older records.
+     */
+    if (Array.isArray(records)) {
+
+        studentPayments = records.filter(function(payment) {
+            return String(payment.studentId) === CURRENT_STUDENT_ID &&
+                   payment.status === "Payment Successful";
+        });
+
+    } else if (records && typeof records === "object") {
+
+        const payment = records[CURRENT_STUDENT_ID];
+
+        if (payment &&
+            String(payment.studentId) === CURRENT_STUDENT_ID &&
+            payment.status === "Payment Successful") {
+
+            studentPayments = [payment];
+        }
+    }
+
+    if (studentPayments.length === 0) {
+
+        container.innerHTML = `
+            <div class="no-payment">
+                <strong>No successful payments yet.</strong><br>
+                Your payment record and invoice will appear here
+                after your employer completes the payment.
+            </div>
+        `;
+
+        return;
+    }
+
+    let totalGross = 0;
+    let totalFee = 0;
+    let totalNet = 0;
+
+    studentPayments.forEach(function(payment) {
+        totalGross += Number(payment.gross || 0);
+        totalFee += Number(payment.fee || 0);
+        totalNet += Number(payment.net || 0);
+    });
+
+    let output = `
+
+        <div class="payment-summary">
+
+            <div class="payment-summary-card">
+                <p>Total Gross Earnings</p>
+                <h3>${formatRM(totalGross)}</h3>
+            </div>
+
+            <div class="payment-summary-card fee">
+                <p>Total Platform Fee (2%)</p>
+                <h3>- ${formatRM(totalFee)}</h3>
+            </div>
+
+            <div class="payment-summary-card net">
+                <p>Total Net Earnings (98%)</p>
+                <h3>${formatRM(totalNet)}</h3>
+            </div>
+
+        </div>
+
+        <h4 class="payment-history-title">
+            Payment History
+        </h4>
+
+    `;
+
+    studentPayments.forEach(function(payment) {
+
+        const jobName = escapePaymentText(
+            payment.job || "Campus Micro-Job"
+        );
+
+        const hours = Number(payment.hours || 0);
+        const rate = Number(payment.rate || 0);
+
+        const payoutStatus = escapePaymentText(
+            payment.payoutStatus || "Processing"
+        );
+
+        output += `
+
+            <div class="payment-record">
+
+                <div class="payment-record-top">
+
+                    <strong>${jobName}</strong>
+
+                    <span class="employer-paid-badge">
+                        Employer Payment: Successful
+                    </span>
+
+                </div>
+
+                <div class="payment-record-details">
+
+                    <div>
+                        Working Hours:
+                        <strong>${hours} hours</strong>
+                    </div>
+
+                    <div>
+                        Hourly Rate:
+                        <strong>${formatRM(rate)}</strong>
+                    </div>
+
+                    <div>
+                        Gross Wages:
+                        <strong>${formatRM(payment.gross)}</strong>
+                    </div>
+
+                    <div>
+                        Platform Fee (2%):
+                        <strong>- ${formatRM(payment.fee)}</strong>
+                    </div>
+
+                    <div>
+                        Net Earnings:
+                        <strong>${formatRM(payment.net)}</strong>
+                    </div>
+
+                </div>
+
+                <div class="student-payout-status">
+                    Student Payout Status: ${payoutStatus}
+                </div>
+
+                <a class="invoice-btn"
+                   href="payment-invoice.html?student=${encodeURIComponent(CURRENT_STUDENT_ID)}">
+                    View Payment Invoice
+                </a>
+
+            </div>
+
+        `;
+    });
+
+    container.innerHTML = output;
+}
+
+/* Load payment information when dashboard opens. */
+loadStudentPayments();
+
+/* Refresh when user returns to the dashboard tab. */
+window.addEventListener("focus", loadStudentPayments);
+
+window.addEventListener("storage", function(event) {
+    if (event.key === PAYMENT_STORAGE_KEY) {
+        loadStudentPayments();
+    }
+});
+</script>
+
+</body>
+</html>

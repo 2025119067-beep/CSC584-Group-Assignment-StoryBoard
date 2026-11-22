@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Jobs | Siswa-Gigs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #f7f5fc;
+    color: #30264a;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(110deg, #39216d, #6340a5);
+    color: white;
+    padding: 19px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 18px #39216d20;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #f5cd55;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: #eee8ff;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #f5cd55;
+}
+
+/* MAIN */
+.container {
+    width: 86%;
+    max-width: 1150px;
+    margin: 38px auto 55px;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 27px;
+}
+
+.welcome h1 {
+    font-size: 28px;
+    color: #39216d;
+    margin-bottom: 7px;
+}
+
+.welcome p {
+    color: #898398;
+    font-size: 13px;
+}
+
+.create-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 19px;
+    border-radius: 9px;
+    background: linear-gradient(110deg, #5936a8, #7952bd);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px #5936a83b;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.create-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 17px #5936a84a;
+}
+
+/* SUMMARY CARDS */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #eee9f7;
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 15px #39216d08;
+    transition: 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px #39216d12;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+
+.purple {
+    background: #eee7ff;
+}
+
+.green {
+    background: #e6f7ed;
+}
+
+.yellow {
+    background: #fff5d9;
+}
+
+.stat-info p {
+    color: #91899f;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.stat-info h2 {
+    color: #39216d;
+    font-size: 24px;
+}
+
+/* CONTENT CARD */
+.content-card {
+    background: white;
+    border: 1px solid #eee9f7;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 18px #39216d08;
+}
+
+.content-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.content-heading h2 {
+    color: #39216d;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.content-heading p {
+    color: #999;
+    font-size: 12px;
+}
+
+/* SEARCH */
+.search-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.search-area input,
+.search-area select {
+    padding: 11px 13px;
+    border: 1px solid #e5dfed;
+    border-radius: 8px;
+    background: #fcfbfe;
+    color: #44365f;
+    outline: none;
+    font-size: 12px;
+}
+
+.search-area input {
+    flex: 1;
+    min-width: 100px;
+}
+
+.search-area select {
+    width: 160px;
+}
+
+.search-area input:focus,
+.search-area select:focus {
+    border-color: #7952bd;
+    box-shadow: 0 0 0 3px #7952bd15;
+}
+
+/* TABLE */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+}
+
+thead {
+    background: #f8f5fd;
+}
+
+th {
+    padding: 14px 13px;
+    text-align: left;
+    color: #776b91;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 17px 13px;
+    border-bottom: 1px solid #f0edf5;
+    font-size: 12px;
+    color: #665d77;
+}
+
+tbody tr {
+    transition: 0.2s;
+}
+
+tbody tr:hover {
+    background: #fcfaff;
+}
+
+.job-name {
+    color: #39216d;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.job-category {
+    color: #999;
+    font-size: 11px;
+}
+
+.rate {
+    color: #5936a8;
+    font-weight: 700;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.status-active {
+    background: #e6f7ed;
+    color: #27834a;
+}
+
+.status-closed {
+    background: #f0edf5;
+    color: #756b83;
+}
+
+.status-expired {
+    background: #fff0e5;
+    color: #c36a30;
+}
+
+/* ACTIONS */
+.actions {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+.action-btn {
+    border: none;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.toggle-btn {
+    background: #eee7ff;
+    color: #5936a8;
+}
+
+.delete-btn {
+    background: #fff0f0;
+    color: #c44d4d;
+}
+
+.action-btn:hover {
+    opacity: 0.75;
+    transform: translateY(-1px);
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 55px 20px;
+}
+
+.empty-icon {
+    font-size: 43px;
+    margin-bottom: 15px;
+}
+
+.empty-state h3 {
+    color: #39216d;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* MESSAGE */
+.notice {
+    display: none;
+    background: #e9f8ee;
+    color: #247441;
+    border: 1px solid #c8ebd2;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.notice.show {
+    display: block;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #999;
+    font-size: 12px;
+    border-top: 1px solid #eeeaf4;
+}
+
+/* RESPONSIVE */
+@media(max-width: 750px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    .welcome {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .content-card {
+        padding: 18px 13px;
+    }
+
+    .search-area {
+        flex-direction: column;
+    }
+
+    .search-area select {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Siswa<span>-Gigs</span></div>
+
+    <nav>
+        <a href="employer-dashboard.html">Dashboard</a>
+        <a href="create-job.html">Create Job</a>
+        <a href="manage-jobs.html" class="active">Manage Jobs</a>
+        <a href="view-applicants.html">Applicants</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- PAGE HEADING -->
+    <div class="welcome">
+        <div>
+            <h1>Manage Your Jobs</h1>
+            <p>Keep track of your job listings and recruitment activities.</p>
+        </div>
+
+        <a href="create-job.html" class="create-btn">
+            + Create New Job
+        </a>
+    </div>
+
+    <!-- STATISTICS -->
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon purple">📋</div>
+            <div class="stat-info">
+                <p>Total Jobs</p>
+                <h2 id="totalJobs">0</h2>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <div class="stat-info">
+                <p>Active Jobs</p>
+                <h2 id="activeJobs">0</h2>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon yellow">👥</div>
+            <div class="stat-info">
+                <p>Total Applicants</p>
+                <h2 id="totalApplicants">0</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JOB LIST -->
+    <div class="content-card">
+
+        <div class="content-heading">
+            <div>
+                <h2>Job Listings</h2>
+                <p>All jobs published by your organisation.</p>
+            </div>
+        </div>
+
+        <div id="notice" class="notice"></div>
+
+        <!-- SEARCH AND FILTER -->
+        <div class="search-area">
+
+            <input type="text" id="searchInput"
+                placeholder="Search job title or location...">
+
+            <select id="statusFilter">
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Closed">Closed</option>
+            </select>
+
+        </div>
+
+        <!-- DYNAMIC TABLE -->
+        <div id="jobContent">
+
+            <div class="table-wrapper">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job Details</th>
+                            <th>Hourly Rate</th>
+                            <th>Vacancies</th>
+                            <th>Applicants</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="jobTableBody">
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Siswa-Gigs | Campus Part-Time Job Portal
+</footer>
+
+<script>
+
+const STORAGE_KEY = "siswaGigsJobs";
+
+let allJobs = [];
+
+const jobTableBody = document.getElementById("jobTableBody");
+const jobContent = document.getElementById("jobContent");
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const notice = document.getElementById("notice");
+
+// READ SAVED JOBS
+function loadJobs() {
+
+    try {
+
+        const savedData = localStorage.getItem(STORAGE_KEY);
+
+        if (!savedData) {
+            allJobs = [];
+        } else {
+
+            const parsedData = JSON.parse(savedData);
+
+            if (Array.isArray(parsedData)) {
+                allJobs = parsedData;
+            } else if (parsedData && typeof parsedData === "object") {
+                allJobs = Object.values(parsedData);
+            } else {
+                allJobs = [];
+            }
+
+        }
+
+        updateStatistics();
+        displayJobs();
+
+    } catch (error) {
+
+        console.error("Error loading jobs:", error);
+
+        jobContent.innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>' +
+            '<h3>Unable to Load Jobs</h3>' +
+            '<p>The saved job data could not be read. Please check the browser console.</p></div>';
+
+    }
+
+}
+
+// UPDATE STATISTICS
+function updateStatistics() {
+
+    const total = allJobs.length;
+
+    const active = allJobs.filter(job =>
+        job.status === "Active"
+    ).length;
+
+    const applicants = allJobs.reduce((sum, job) => {
+        return sum + (Number(job.applicants) || 0);
+    }, 0);
+
+    document.getElementById("totalJobs").textContent = total;
+    document.getElementById("activeJobs").textContent = active;
+    document.getElementById("totalApplicants").textContent = applicants;
+
+}
+
+// DISPLAY JOBS
+function displayJobs() {
+
+    const keyword = searchInput.value.toLowerCase().trim();
+    const selectedStatus = statusFilter.value;
+
+    const filteredJobs = allJobs.filter(job => {
+
+        const title = (job.title || "").toLowerCase();
+        const location = (job.location || "").toLowerCase();
+
+        const matchesSearch =
+            title.includes(keyword) ||
+            location.includes(keyword);
+
+        const matchesStatus =
+            selectedStatus === "All" ||
+            job.status === selectedStatus;
+
+        return matchesSearch && matchesStatus;
+
+    });
+
+    if (filteredJobs.length === 0) {
+
+        jobContent.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📂</div>
+                <h3>No Jobs Found</h3>
+                <p>
+                    No job listings match your search.<br>
+                    Create a new job or change your search filter.
+                </p>
+                <a href="create-job.html" class="create-btn">
+                    + Create New Job
+                </a>
+            </div>
+        `;
+
+        return;
+    }
+
+    jobContent.innerHTML = `
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Details</th>
+                        <th>Hourly Rate</th>
+                        <th>Vacancies</th>
+                        <th>Applicants</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="jobTableBody"></tbody>
+            </table>
+        </div>
+    `;
+
+    const tbody = document.getElementById("jobTableBody");
+
+    filteredJobs.forEach(job => {
+
+        const row = document.createElement("tr");
+
+        const statusClass =
+            job.status === "Active" ? "status-active" :
+            job.status === "Expired" ? "status-expired" :
+            "status-closed";
+
+        const statusText = job.status || "Active";
+
+        const jobName = document.createElement("div");
+        jobName.className = "job-name";
+        jobName.textContent = job.title || "Untitled Job";
+
+        const category = document.createElement("div");
+        category.className = "job-category";
+        category.textContent =
+            (job.category || "Other") + " · " +
+            (job.location || "Location not specified");
+
+        const detailsCell = document.createElement("td");
+        detailsCell.append(jobName, category);
+
+        const rateCell = document.createElement("td");
+        rateCell.className = "rate";
+        rateCell.textContent =
+            "RM " + (Number(job.hourlyRate) || 0).toFixed(2);
+
+        const vacancyCell = document.createElement("td");
+        vacancyCell.textContent = job.vacancies || 0;
+
+        const applicantCell = document.createElement("td");
+        applicantCell.textContent = job.applicants || 0;
+
+        const statusCell = document.createElement("td");
+        const statusBadge = document.createElement("span");
+        statusBadge.className = "status " + statusClass;
+        statusBadge.textContent = statusText;
+        statusCell.appendChild(statusBadge);
+
+        const actionCell = document.createElement("td");
+        const actionGroup = document.createElement("div");
+        actionGroup.className = "actions";
+
+        const toggleButton = document.createElement("button");
+        toggleButton.className = "action-btn toggle-btn";
+        toggleButton.textContent =
+            job.status === "Active" ? "Close" : "Activate";
+
+        toggleButton.addEventListener("click", function() {
+            toggleJobStatus(job.jobId);
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "action-btn delete-btn";
+        deleteButton.textContent = "Delete";
+
+        deleteButton.addEventListener("click", function() {
+            deleteJob(job.jobId);
+        });
+
+        actionGroup.append(toggleButton, deleteButton);
+        actionCell.appendChild(actionGroup);
+
+        row.append(
+            detailsCell,
+            rateCell,
+            vacancyCell,
+            applicantCell,
+            statusCell,
+            actionCell
+        );
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+// CHANGE JOB STATUS
+function toggleJobStatus(jobId) {
+
+    const job = allJobs.find(item => item.jobId === jobId);
+
+    if (!job) return;
+
+    job.status = job.status === "Active" ? "Closed" : "Active";
+
+    saveJobs();
+
+    showNotice("Job status updated successfully.");
+
+}
+
+// DELETE JOB
+function deleteJob(jobId) {
+
+    const confirmed = confirm(
+        "Are you sure you want to delete this job listing?"
+    );
+
+    if (!confirmed) return;
+
+    allJobs = allJobs.filter(job => job.jobId !== jobId);
+
+    saveJobs();
+
+    showNotice("Job listing deleted successfully.");
+
+}
+
+// SAVE UPDATED DATA
+function saveJobs() {
+
+    try {
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(allJobs));
+
+        updateStatistics();
+        displayJobs();
+
+    } catch (error) {
+
+        console.error("Unable to save jobs:", error);
+        showNotice("Unable to save changes. Please try again.");
+
+    }
+
+}
+
+// SUCCESS NOTICE
+function showNotice(text) {
+
+    notice.textContent = "✓ " + text;
+    notice.classList.add("show");
+
+    setTimeout(function() {
+        notice.classList.remove("show");
+    }, 3000);
+
+}
+
+// SEARCH AND FILTER
+searchInput.addEventListener("input", displayJobs);
+statusFilter.addEventListener("change", displayJobs);
+
+// INITIAL LOAD
+loadJobs();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | Siswa-Gigs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f3ff;
+            color: #30234a;
+        }
+
+        header {
+            background: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(57, 33, 109, 0.07);
+        }
+
+        .logo {
+            color: #5936a8;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #7147c7;
+        }
+
+        .banner {
+            background: linear-gradient(120deg, #39216d, #8058ce);
+            color: white;
+            padding: 40px 7%;
+        }
+
+        .banner h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            color: #eee7ff;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 25px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #eee7fa;
+        }
+
+        .summary-card p {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .summary-card h2 {
+            color: #5936a8;
+            font-size: 27px;
+        }
+
+        .section-title {
+            color: #39216d;
+            font-size: 21px;
+            margin-bottom: 18px;
+        }
+
+        .table-card {
+            background: white;
+            padding: 25px;
+            border-radius: 13px;
+            border: 1px solid #eee7fa;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background: #f4effc;
+            color: #5936a8;
+            text-align: left;
+            padding: 15px 12px;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 17px 12px;
+            border-bottom: 1px solid #eeeaf5;
+            color: #666;
+            font-size: 13px;
+        }
+
+        td strong {
+            color: #39216d;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cb;
+            color: #856300;
+        }
+
+        .hired {
+            background: #dff5e8;
+            color: #247344;
+        }
+
+        .rejected {
+            background: #fde5e5;
+            color: #b33b3b;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background: #5936a8;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        .notice {
+            background: #fff8df;
+            color: #80651b;
+            padding: 17px;
+            border-radius: 9px;
+            margin-top: 22px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            background: #f5cd55;
+            color: #39216d;
+            padding: 12px 20px;
+            margin-top: 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #39216d;
+            color: #eee7ff;
+            text-align: center;
+            padding: 25px;
+            margin-top: 45px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 650px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">SISWA-GIGS</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="browse-jobs.html">Find Jobs</a>
+            <a href="login.html">Logout</a>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>My Applications</h1>
+        <p>Track your job applications and check your latest application status.</p>
+    </section>
+
+    <main class="container">
+
+        <section class="summary">
+
+            <div class="summary-card">
+                <p>Total Applications</p>
+                <h2>3</h2>
+            </div>
+
+            <div class="summary-card">
+                <p>Pending Applications</p>
+                <h2>1</h2>
+            </div>
+
+            <div class="summary-card">
+                <p>Successful Applications</p>
+                <h2>1</h2>
+            </div>
+
+        </section>
+
+        <h2 class="section-title">Application History</h2>
+
+        <section class="table-card">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Application ID</th>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Date Applied</th>
+                        <th>Hourly Rate</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>APP001</td>
+                        <td><strong>Campus Event Assistant</strong></td>
+                        <td>Student Affairs</td>
+                        <td>15 Oct 2026</td>
+                        <td>RM 12</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td><a href="job-details.html" class="view-btn">View</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>APP002</td>
+                        <td><strong>Library Data Entry Assistant</strong></td>
+                        <td>University Library</td>
+                        <td>12 Oct 2026</td>
+                        <td>RM 10</td>
+                        <td><span class="status hired">Hired</span></td>
+                        <td><a href="job-details.html" class="view-btn">View</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>APP003</td>
+                        <td><strong>Campus Booth Crew</strong></td>
+                        <td>University Vendor</td>
+                        <td>10 Oct 2026</td>
+                        <td>RM 11</td>
+                        <td><span class="status rejected">Rejected</span></td>
+                        <td><a href="job-details.html" class="view-btn">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <div class="notice">
+            <strong>Application Reminder</strong><br>
+            Your application status will be updated by the employer.
+            Please check this page regularly for hiring decisions.
+        </div>
+
+        <a href="browse-jobs.html" class="browse-btn">
+            Browse More Jobs
+        </a>
+
+    </main>
+
+    <footer>
+        © 2026 Siswa-Gigs | Your Campus. Your Opportunities. Your Future.
+    </footer>
+
+</body>
+</html>
